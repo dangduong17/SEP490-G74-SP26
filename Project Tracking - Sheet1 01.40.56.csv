@@ -1,0 +1,48 @@
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+COMMON / AUTHENTICATION,,,,,,,,
+Feature,Screen Function,Screen Function Description,In Charge,Status,Actual,Updated,Update Details,LOC
+Common,Login,Allow user login using email and password,Trung Anh,To Do,iter1,none,2 fields – select,80
+Common,Register,Allow guest to register new account,Trung Anh,To Do,iter1,none,4 fields – insert,120
+Common,Logout,Allow user to logout from system,Trung Anh,To Do,iter1,none,no DB change,40
+Common,Change Password,Allow user to update account password,Trung Anh,To Do,iter2,none,3 fields – update,90
+,,,,,,,,
+CANDIDATE – JOB & APPLICATION,,,,,,,,
+Feature,Screen Function,Screen Function Description,In Charge,Status,Actual,Updated,Update Details,LOC
+Candidate,Job List,Display list of available job postings,Trung Anh,To Do,iter1,none,select + filter,150
+Candidate,Job Detail,Display job detail information,Trung Anh,To Do,iter1,none,select by id,100
+Candidate,Apply Job,Allow candidate to apply for a job,Trung Anh,To Do,iter1,none,insert application,140
+Candidate,Application List,Display applied jobs list,Huy,To Do,iter2,none,select,120
+Candidate,Application Detail,Display application detail,Huy,To Do,iter2,none,select by id,90
+Candidate,Candidate Dashboard,Overview applied jobs and status,Huy,To Do,iter2,none,summary select,130
+,,,,,,,,
+CV MANAGEMENT,,,,,,,,
+Feature,Screen Function,Screen Function Description,In Charge,Status,Actual,Updated,Update Details,LOC
+CV,CV List,Display list of candidate CVs,Dũng,To Do,iter2,none,select,120
+CV,Create CV,Allow candidate to create new CV,Dũng,To Do,iter2,none,insert,160
+CV,CV Detail,Display CV detail information,Dũng,To Do,iter2,none,select by id,110
+CV,Edit CV,Allow candidate to edit CV content,Dũng,To Do,iter2,none,update,150
+CV,Download CV,Download CV in PDF format,Dũng,To Do,iter3,none,export pdf,100
+,,,,,,,,
+RECRUITER,,,,,,,,
+Feature,Screen Function,Screen Function Description,In Charge,Status,Actual,Updated,Update Details,LOC
+Recruiter,Recruiter Dashboard,Overview job postings and applications,Đình Anh,To Do,iter2,none,summary select,140
+Recruiter,Job Posting List,Display recruiter job postings,Đình Anh,To Do,iter2,none,select,120
+Recruiter,Create Job,Allow recruiter to create job posting,Đình Anh,To Do,iter2,none,insert,160
+Recruiter,Edit Job,Allow recruiter to edit job posting,Đình Anh,To Do,iter2,none,update,150
+Recruiter,Application List,View applications by job,Đình Anh,To Do,iter3,none,select join,140
+Recruiter,Update Application Status,Update application status,Đình Anh,To Do,iter3,none,update,120
+,,,,,,,,
+ADMIN,,,,,,,,
+Feature,Screen Function,Screen Function Description,In Charge,Status,Actual,Updated,Update Details,LOC
+Admin,Admin Dashboard,Display system overview dashboard,Dương,To Do,iter3,none,summary select,150
+Admin,User List,Display list of system users,Dương,To Do,iter3,none,select,120
+Admin,Create User,Allow admin to create new user,Dương,To Do,iter3,none,insert,140
+Admin,Edit User,Allow admin to edit user information,Dương,To Do,iter3,none,update,130
+Admin,Activate / Deactivate User,Update user account status,Dương,To Do,iter3,none,update,110

@@ -1,57 +1,52 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "RJMS - Recruitment System";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to RJMS</h1>
-    <p class="lead">Recruitment Job Management System</p>
-</div>
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">RJMS</h1>
+            <p class="hero-subtitle">Recruitment Job Management System</p>
+            <div class="hero-buttons">
+                <a asp-controller="Candidates" asp-action="JobList" class="btn btn-primary btn-lg">Find Jobs</a>
+                <a asp-controller="Recruiter" asp-action="JobPostingList" class="btn btn-outline-light btn-lg">Post
+                    Jobs</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">For Job Seekers</h5>
-                <p class="card-text">Create your profile, upload CVs, and apply for exciting job opportunities.</p>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Candidate"))
-                {
-                    <a href="#" class="btn btn-primary">View Jobs</a>
-                }
-                else
-                {
-                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary">Get Started</a>
-                }
+    <div class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose RJMS?</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Smart Job Search</h3>
+                        <p>Find the perfect job with our advanced search and matching system.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Talent Management</h3>
+                        <p>Manage candidates and find the best talent for your organization.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Track performance and get insights with detailed analytics.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">For Recruiters</h5>
-                <p class="card-text">Post job openings, manage candidates, and find the perfect talent for your organization.</p>
-                @if (User.Identity!.IsAuthenticated && (User.IsInRole("Recruiter") || User.IsInRole("Admin")))
-                {
-                    <a asp-controller="Jobs" asp-action="Create" class="btn btn-success">Post a Job</a>
-                }
-                else
-                {
-                    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-success">Join as Recruiter</a>
-                }
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Features</h5>
-                <ul class="list-unstyled">
-                    <li>✓ User Authentication & Authorization</li>
-                    <li>✓ Candidate Management</li>
-                    <li>✓ CV Management</li>
-                    <li>✓ Job Management</li>
-                    <li>✓ Application Tracking</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using vn.edu.fpt.entity;
 
-namespace SEP490_G74_RJMS.Controllers
+namespace vn.edu.fpt.controller
 {
     public class HomeController : Controller
     {
