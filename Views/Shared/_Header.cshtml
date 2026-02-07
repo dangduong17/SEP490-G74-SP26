@@ -1,0 +1,74 @@
+<header class="site-header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                <div class="logo-wrapper">
+                    <span class="logo-text">Finding Jobs</span>
+                </div>
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Menu -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" asp-controller="Candidates" asp-action="JobList">
+                            Việc làm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" asp-controller="CVs" asp-action="CVList">
+                            Hồ sơ & CV
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">
+                            Công ty
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#">
+                            Công cụ
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- User Actions -->
+                <div class="d-flex align-items-center gap-2">
+                    @* Check if user is logged in *@
+                    @if (false) @* Replace with actual auth check *@
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-link text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <span>Tài khoản</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                                <li><a class="dropdown-item" href="#">Việc làm đã lưu</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-primary" asp-controller="Auth" asp-action="Login">
+                            Đăng nhập
+                        </a>
+                        <a class="btn btn-primary" asp-controller="Auth" asp-action="Register">
+                            Đăng ký
+                        </a>
+                    }
+                    <a class="btn btn-success" asp-controller="Recruiter" asp-action="JobPostingList">
+                        Đăng tuyển dụng
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

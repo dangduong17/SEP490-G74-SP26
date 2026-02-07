@@ -65,6 +65,11 @@ artifacts/
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
+# ASP.NET Configuration files with sensitive data
+appsettings.json
+appsettings.*.json
+!appsettings.Development.json
+
 # StyleCop
 StyleCopReport.xml
 
