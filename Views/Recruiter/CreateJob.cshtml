@@ -1,0 +1,120 @@
+@{
+    ViewData["Title"] = "Đăng tin tuyển dụng";
+}
+
+<section class="page-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Đăng tin tuyển dụng mới</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <!-- Job Title -->
+                            <div class="mb-3">
+                                <label class="form-label">Vị trí tuyển dụng <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="title" placeholder="Ví dụ: Nhân viên kinh doanh" required>
+                            </div>
+
+                            <!-- Category & Location -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Ngành nghề <span class="text-danger">*</span></label>
+                                    <select class="form-select" name="category" required>
+                                        <option value="">Chọn ngành nghề</option>
+                                        <option>IT - Phần mềm</option>
+                                        <option>Marketing</option>
+                                        <option>Kinh doanh</option>
+                                        <option>Kế toán</option>
+                                        <option>Nhân sự</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Địa điểm <span class="text-danger">*</span></label>
+                                    <select class="form-select" name="location" required>
+                                        <option value="">Chọn địa điểm</option>
+                                        <option>Hà Nội</option>
+                                        <option>TP. Hồ Chí Minh</option>
+                                        <option>Đà Nẵng</option>
+                                        <option>Hải Phòng</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Salary & Job Type -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Mức lương</label>
+                                    <input type="text" class="form-control" name="salary" placeholder="Ví dụ: 15-25 triệu">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Loại hình công việc</label>
+                                    <select class="form-select" name="jobType">
+                                        <option>Full-time</option>
+                                        <option>Part-time</option>
+                                        <option>Contract</option>
+                                        <option>Internship</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Experience & Positions -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Kinh nghiệm</label>
+                                    <select class="form-select" name="experience">
+                                        <option>Không yêu cầu</option>
+                                        <option>Dưới 1 năm</option>
+                                        <option>1-2 năm</option>
+                                        <option>2-5 năm</option>
+                                        <option>Trên 5 năm</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Số lượng tuyển</label>
+                                    <input type="number" class="form-control" name="positions" value="1" min="1">
+                                </div>
+                            </div>
+
+                            <!-- Job Description -->
+                            <div class="mb-3">
+                                <label class="form-label">Mô tả công việc <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="description" rows="6" 
+                                          placeholder="Mô tả chi tiết về công việc, nhiệm vụ..." required></textarea>
+                            </div>
+
+                            <!-- Job Requirements -->
+                            <div class="mb-3">
+                                <label class="form-label">Yêu cầu công việc <span class="text-danger">*</span></label>
+                                <textarea class="form-control" name="requirements" rows="6" 
+                                          placeholder="Các yêu cầu về kỹ năng, kinh nghiệm..." required></textarea>
+                            </div>
+
+                            <!-- Benefits -->
+                            <div class="mb-3">
+                                <label class="form-label">Quyền lợi</label>
+                                <textarea class="form-control" name="benefits" rows="4" 
+                                          placeholder="Các quyền lợi, phúc lợi cho ứng viên..."></textarea>
+                            </div>
+
+                            <!-- Deadline -->
+                            <div class="mb-3">
+                                <label class="form-label">Hạn nộp hồ sơ <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" name="deadline" required>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex gap-2 justify-content-end">
+                                <a asp-action="JobPostingList" class="btn btn-outline-secondary">Hủy</a>
+                                <button type="submit" name="action" value="draft" class="btn btn-outline-primary">Lưu nháp</button>
+                                <button type="submit" name="action" value="publish" class="btn btn-primary">Đăng tin</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
