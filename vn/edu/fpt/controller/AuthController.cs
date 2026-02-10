@@ -1,58 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
-using vn.edu.fpt.entity;
+using vn.edu.fpt.dto;
+using vn.edu.fpt.service;
 
 namespace vn.edu.fpt.controller
 {
-    public class AuthController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
-        // Login - Allow user login using email and password
-        public IActionResult Login()
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
         {
-            return View();
+            _authService = authService;
         }
 
-        [HttpPost]
-        public IActionResult Login(string email, string password)
+        [HttpPost("register")]
+        public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request)
         {
-            // TODO: Implement login logic - 2 fields select (80 LOC)
-            return RedirectToAction("Index", "Home");
+            var response = await _authService.RegisterAsync(request);
+            if (response == null)
+                return BadRequest(new { message = "User already exists or registration failed" });
+
+            return Ok(response);
         }
 
-        // Register - Allow guest to register new account
-        public IActionResult Register()
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
         {
-            return View();
-        }
+            var response = await _authService.LoginAsync(request);
+            if (response == null)
+                return Unauthorized(new { message = "Invalid email or password" });
 
-        [HttpPost]
-        public IActionResult Register(User user)
-        {
-            // TODO: Implement register logic - 4 fields insert (120 LOC)
-            return RedirectToAction("Login");
-        }
-
-        // Logout - Allow user to logout from system
-        public IActionResult Logout()
-        {
-            // TODO: Implement logout logic - no DB change (40 LOC)
-            return RedirectToAction("Login");
-        }
-
-        // ChangePassword - Allow user to update account password
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ChangePassword(
-            string currentPassword,
-            string newPassword,
-            string confirmPassword
-        )
-        {
-            // TODO: Implement change password logic - 3 fields update (90 LOC)
-            return View();
+            return Ok(response);
         }
     }
 }

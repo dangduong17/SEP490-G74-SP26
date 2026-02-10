@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class Job
+    public class Job : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [StringLength(200)]
         public string Title { get; set; } = string.Empty;
@@ -26,14 +23,11 @@ namespace vn.edu.fpt.entity
         [StringLength(50)]
         public string JobType { get; set; } = string.Empty; // Full-time, Part-time, Contract
 
-        [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SalaryMin { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal? SalaryMax { get; set; }
-
-        public DateTime PostedDate { get; set; } = DateTime.Now;
 
         public DateTime? ExpiryDate { get; set; }
 
@@ -42,12 +36,18 @@ namespace vn.edu.fpt.entity
         [Required]
         public int RecruiterId { get; set; }
 
-        // Navigation properties
         [ForeignKey("RecruiterId")]
-        public virtual User Recruiter { get; set; } = null!;
+        public virtual User? Recruiter { get; set; }
 
-        public virtual ICollection<Application> Applications { get; set; } =
-            new List<Application>();
+        public int? CompanyId { get; set; }
+
+        [ForeignKey("CompanyId")]
+        public virtual Company? Company { get; set; }
+
+        // Navigation properties
+        public virtual ICollection<Application>? Applications { get; set; }
+        public virtual ICollection<SavedJob>? SavedJobs { get; set; }
+        public virtual ICollection<Skill>? Skills { get; set; }
     }
 
     public enum JobStatus
@@ -56,5 +56,7 @@ namespace vn.edu.fpt.entity
         Closed = 2,
         Draft = 3,
         Expired = 4,
+        PendingApproval = 5
     }
 }
+

@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class Application
+    public class Application : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public int JobId { get; set; }
 
@@ -30,10 +27,10 @@ namespace vn.edu.fpt.entity
 
         // Navigation properties
         [ForeignKey("JobId")]
-        public virtual Job Job { get; set; } = null!;
+        public virtual Job? Job { get; set; }
 
         [ForeignKey("CandidateId")]
-        public virtual User Candidate { get; set; } = null!;
+        public virtual User? Candidate { get; set; }
 
         [ForeignKey("CVId")]
         public virtual CV? CV { get; set; }
@@ -52,3 +49,4 @@ namespace vn.edu.fpt.entity
         Hired = 9,
     }
 }
+
