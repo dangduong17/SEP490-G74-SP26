@@ -1,55 +1,76 @@
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using vn.edu.fpt.repository;
 using vn.edu.fpt.entity;
+using vn.edu.fpt.dto;
 
 namespace vn.edu.fpt.controller
 {
-    public class CVsController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CVsController : ControllerBase
     {
-        // CVList - Display list of candidate CVs
-        public IActionResult CVList()
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public CVsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            // TODO: Implement CV list logic - select (120 LOC)
-            return View();
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        // CreateCV - Allow candidate to create new CV
-        public IActionResult CreateCV()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CVDto>>> GetAll()
         {
-            return View();
+            var cvs = await _unitOfWork.CVs.GetAllAsync();
+            var cvDtos = _mapper.Map<IEnumerable<CVDto>>(cvs);
+            return Ok(cvDtos);
         }
 
-        [HttpPost]
-        public IActionResult CreateCV(CV cv)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CVDto>> GetById(int id)
         {
-            // TODO: Implement create CV logic - insert (160 LOC)
-            return RedirectToAction("CVList");
-        }
+            var cv = await _unitOfWork.CVs.GetByIdAsync(id);
+            if (cv == null)
+                return NotFound();
 
-        // CVDetail - Display CV detail information
-        public IActionResult CVDetail(int id)
-        {
-            // TODO: Implement CV detail logic - select by id (110 LOC)
-            return View();
-        }
-
-        // EditCV - Allow candidate to edit CV content
-        public IActionResult EditCV(int id)
-        {
-            return View();
+            var cvDto = _mapper.Map<CVDto>(cv);
+            return Ok(cvDto);
         }
 
         [HttpPost]
-        public IActionResult EditCV(CV cv)
+        public async Task<ActionResult<CVDto>> Create(CV cv)
         {
-            // TODO: Implement edit CV logic - update (150 LOC)
-            return RedirectToAction("CVDetail", new { id = cv.Id });
+            await _unitOfWork.CVs.AddAsync(cv);
+            await _unitOfWork.CompleteAsync();
+
+            var cvDto = _mapper.Map<CVDto>(cv);
+            return CreatedAtAction(nameof(GetById), new { id = cv.Id }, cvDto);
         }
 
-        // DownloadCV - Download CV in PDF format
-        public IActionResult DownloadCV(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, CV cv)
         {
-            // TODO: Implement download CV logic - export pdf (100 LOC)
-            return File(new byte[0], "application/pdf", "CV.pdf");
+            if (id != cv.Id)
+                return BadRequest();
+
+            _unitOfWork.CVs.Update(cv);
+            await _unitOfWork.CompleteAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cv = await _unitOfWork.CVs.GetByIdAsync(id);
+            if (cv == null)
+                return NotFound();
+
+            _unitOfWork.CVs.Delete(cv);
+            await _unitOfWork.CompleteAsync();
+
+            return NoContent();
         }
     }
 }
