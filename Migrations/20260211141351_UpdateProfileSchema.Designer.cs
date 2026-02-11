@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vn.edu.fpt.data;
 
@@ -11,9 +12,11 @@ using vn.edu.fpt.data;
 namespace SEP490_G74_RJMS.Migrations
 {
     [DbContext(typeof(RJMSDbContext))]
-    partial class RJMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260211141351_UpdateProfileSchema")]
+    partial class UpdateProfileSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1042,8 +1045,9 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<int>("TargetAudience")
-                        .HasColumnType("int");
+                    b.Property<string>("TargetPool")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vn.edu.fpt.data;
 
@@ -11,9 +12,11 @@ using vn.edu.fpt.data;
 namespace SEP490_G74_RJMS.Migrations
 {
     [DbContext(typeof(RJMSDbContext))]
-    partial class RJMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260211140215_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,7 +158,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Admin", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.AdminProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -194,7 +197,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Admins");
+                    b.ToTable("AdminProfiles");
                 });
 
             modelBuilder.Entity("vn.edu.fpt.entity.Application", b =>
@@ -302,7 +305,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.ToTable("CVs");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Candidate", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.CandidateProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -392,7 +395,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Candidates");
+                    b.ToTable("CandidateProfiles");
                 });
 
             modelBuilder.Entity("vn.edu.fpt.entity.CandidateSkill", b =>
@@ -791,86 +794,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.ToTable("JobSkills");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Link")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("SubscriptionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TransactionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubscriptionId");
-
-                    b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Recruiter", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.RecruiterProfile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -928,7 +852,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Recruiters");
+                    b.ToTable("RecruiterProfiles");
                 });
 
             modelBuilder.Entity("vn.edu.fpt.entity.SavedJob", b =>
@@ -972,82 +896,6 @@ namespace SEP490_G74_RJMS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Subscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PlanId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("SubscriptionPlanId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("SubscriptionPlanId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.SubscriptionPlan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DurationDays")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<int>("TargetAudience")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubscriptionPlans");
                 });
 
             modelBuilder.Entity("vn.edu.fpt.entity.User", b =>
@@ -1226,11 +1074,11 @@ namespace SEP490_G74_RJMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Admin", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.AdminProfile", b =>
                 {
                     b.HasOne("vn.edu.fpt.entity.User", "User")
-                        .WithOne("Admin")
-                        .HasForeignKey("vn.edu.fpt.entity.Admin", "UserId")
+                        .WithOne("AdminProfile")
+                        .HasForeignKey("vn.edu.fpt.entity.AdminProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1245,7 +1093,7 @@ namespace SEP490_G74_RJMS.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("Applications")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1266,7 +1114,7 @@ namespace SEP490_G74_RJMS.Migrations
 
             modelBuilder.Entity("vn.edu.fpt.entity.CV", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("CVs")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1275,11 +1123,11 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Candidate");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Candidate", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.CandidateProfile", b =>
                 {
                     b.HasOne("vn.edu.fpt.entity.User", "User")
-                        .WithOne("Candidate")
-                        .HasForeignKey("vn.edu.fpt.entity.Candidate", "UserId")
+                        .WithOne("CandidateProfile")
+                        .HasForeignKey("vn.edu.fpt.entity.CandidateProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1288,7 +1136,7 @@ namespace SEP490_G74_RJMS.Migrations
 
             modelBuilder.Entity("vn.edu.fpt.entity.CandidateSkill", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("Skills")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1329,7 +1177,7 @@ namespace SEP490_G74_RJMS.Migrations
 
             modelBuilder.Entity("vn.edu.fpt.entity.Education", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("Educations")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1340,7 +1188,7 @@ namespace SEP490_G74_RJMS.Migrations
 
             modelBuilder.Entity("vn.edu.fpt.entity.FollowedCompany", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("FollowedCompanies")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1370,7 +1218,7 @@ namespace SEP490_G74_RJMS.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("vn.edu.fpt.entity.Recruiter", "Recruiter")
+                    b.HasOne("vn.edu.fpt.entity.RecruiterProfile", "Recruiter")
                         .WithMany("Jobs")
                         .HasForeignKey("RecruiterId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1402,29 +1250,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Notification", b =>
-                {
-                    b.HasOne("vn.edu.fpt.entity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Payment", b =>
-                {
-                    b.HasOne("vn.edu.fpt.entity.Subscription", "Subscription")
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subscription");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Recruiter", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.RecruiterProfile", b =>
                 {
                     b.HasOne("vn.edu.fpt.entity.Company", "Company")
                         .WithMany("Recruiters")
@@ -1432,8 +1258,8 @@ namespace SEP490_G74_RJMS.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("vn.edu.fpt.entity.User", "User")
-                        .WithOne("Recruiter")
-                        .HasForeignKey("vn.edu.fpt.entity.Recruiter", "UserId")
+                        .WithOne("RecruiterProfile")
+                        .HasForeignKey("vn.edu.fpt.entity.RecruiterProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1444,7 +1270,7 @@ namespace SEP490_G74_RJMS.Migrations
 
             modelBuilder.Entity("vn.edu.fpt.entity.SavedJob", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("SavedJobs")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1461,32 +1287,9 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Subscription", b =>
-                {
-                    b.HasOne("vn.edu.fpt.entity.SubscriptionPlan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("vn.edu.fpt.entity.SubscriptionPlan", null)
-                        .WithMany("Subscriptions")
-                        .HasForeignKey("SubscriptionPlanId");
-
-                    b.HasOne("vn.edu.fpt.entity.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plan");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("vn.edu.fpt.entity.WorkExperience", b =>
                 {
-                    b.HasOne("vn.edu.fpt.entity.Candidate", "Candidate")
+                    b.HasOne("vn.edu.fpt.entity.CandidateProfile", "Candidate")
                         .WithMany("WorkExperiences")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1500,7 +1303,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Applications");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Candidate", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.CandidateProfile", b =>
                 {
                     b.Navigation("Applications");
 
@@ -1544,7 +1347,7 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Recruiter", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.RecruiterProfile", b =>
                 {
                     b.Navigation("Jobs");
                 });
@@ -1556,18 +1359,13 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.SubscriptionPlan", b =>
-                {
-                    b.Navigation("Subscriptions");
-                });
-
             modelBuilder.Entity("vn.edu.fpt.entity.User", b =>
                 {
-                    b.Navigation("Admin");
+                    b.Navigation("AdminProfile");
 
-                    b.Navigation("Candidate");
+                    b.Navigation("CandidateProfile");
 
-                    b.Navigation("Recruiter");
+                    b.Navigation("RecruiterProfile");
                 });
 #pragma warning restore 612, 618
         }

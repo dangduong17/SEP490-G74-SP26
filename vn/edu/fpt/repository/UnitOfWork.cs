@@ -10,6 +10,9 @@ namespace vn.edu.fpt.repository
         public UnitOfWork(RJMSDbContext context)
         {
             _context = context;
+            Candidates = new GenericRepository<Candidate>(_context);
+            Recruiters = new GenericRepository<Recruiter>(_context);
+            Admins = new GenericRepository<Admin>(_context);
             Users = new GenericRepository<User>(_context);
             Companies = new GenericRepository<Company>(_context);
             Jobs = new GenericRepository<Job>(_context);
@@ -23,6 +26,9 @@ namespace vn.edu.fpt.repository
             SavedJobs = new GenericRepository<SavedJob>(_context);
         }
 
+        public IGenericRepository<Candidate> Candidates { get; private set; }
+        public IGenericRepository<Recruiter> Recruiters { get; private set; }
+        public IGenericRepository<Admin> Admins { get; private set; }
         public IGenericRepository<User> Users { get; private set; }
         public IGenericRepository<Company> Companies { get; private set; }
         public IGenericRepository<Job> Jobs { get; private set; }

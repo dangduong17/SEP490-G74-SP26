@@ -2,16 +2,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace vn.edu.fpt.entity
 {
-    public class Skill : BaseEntity
+    public class Skill
     {
+        [Key]
+        public int Id { get; set; }
+        
         [Required]
-        [StringLength(100)]
-        public string Name { get; set; } = string.Empty;
-
-        public string? Description { get; set; }
-
+        [MaxLength(100)]
+        public string Name { get; set; } = null!;
+        
+        [MaxLength(100)]
+        public string? Category { get; set; }
+        
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
         // Navigation properties
-        public virtual ICollection<Job>? Jobs { get; set; }
-        public virtual ICollection<CV>? CVs { get; set; }
+        public ICollection<JobSkill> Jobs { get; set; } = new List<JobSkill>();
+        public ICollection<CandidateSkill> Candidates { get; set; } = new List<CandidateSkill>();
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class Subscription
+    public class Admin
     {
         [Key]
         public int Id { get; set; }
@@ -14,18 +14,20 @@ namespace vn.edu.fpt.entity
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
         
-        public int PlanId { get; set; }
+        [MaxLength(255)]
+        public string? FullName { get; set; }
         
-        [ForeignKey(nameof(PlanId))]
-        public SubscriptionPlan Plan { get; set; } = null!;
+        [MaxLength(20)]
+        public string? Phone { get; set; }
         
-        public DateTime StartDate { get; set; }
+        [MaxLength(500)]
+        public string? Avatar { get; set; }
         
-        public DateTime EndDate { get; set; }
-        
-        [MaxLength(50)]
-        public string Status { get; set; } = "Active";
+        [MaxLength(100)]
+        public string? Department { get; set; }
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
+        public DateTime? UpdatedAt { get; set; }
     }
 }
