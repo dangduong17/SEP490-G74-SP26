@@ -2,18 +2,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class SavedJob
+    public class FollowedCompany
     {
         public int CandidateId { get; set; }
         
         [ForeignKey(nameof(CandidateId))]
         public Candidate Candidate { get; set; } = null!;
         
-        public int JobId { get; set; }
+        public int CompanyId { get; set; }
         
-        [ForeignKey(nameof(JobId))]
-        public Job Job { get; set; } = null!;
+        [ForeignKey(nameof(CompanyId))]
+        public Company Company { get; set; } = null!;
         
-        public DateTime SavedAt { get; set; } = DateTime.UtcNow;
+        public DateTime FollowedAt { get; set; } = DateTime.UtcNow;
     }
 }

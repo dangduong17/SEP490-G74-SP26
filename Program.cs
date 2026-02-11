@@ -5,9 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using vn.edu.fpt.data;
 using vn.edu.fpt.repository;
-using vn.edu.fpt.mapper;
 using vn.edu.fpt.entity;
-using vn.edu.fpt.service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +17,7 @@ builder.Services.AddDbContext<RJMSDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBContext")));
 
 // Configure Identity
-builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -54,22 +52,6 @@ builder.Services.AddAuthentication(options =>
 
 // Register UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-// Register AuthService
-builder.Services.AddScoped<IAuthService, AuthService>();
-
-// Register Business Services
-builder.Services.AddScoped<IJobService, JobService>();
-builder.Services.AddScoped<IApplicationService, ApplicationService>();
-builder.Services.AddScoped<ICVService, CVService>();
-builder.Services.AddScoped<ICompanyService, CompanyService>();
-builder.Services.AddScoped<ISkillService, SkillService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<ISavedJobService, SavedJobService>();
-
-// Register AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
 
 var app = builder.Build();
 

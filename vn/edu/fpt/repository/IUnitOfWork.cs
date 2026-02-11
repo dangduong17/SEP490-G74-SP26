@@ -4,6 +4,9 @@ namespace vn.edu.fpt.repository
 {
     public interface IUnitOfWork : IDisposable
     {
+        IGenericRepository<Candidate> Candidates { get; }
+        IGenericRepository<Recruiter> Recruiters { get; }
+        IGenericRepository<Admin> Admins { get; }
         IGenericRepository<User> Users { get; }
         IGenericRepository<Company> Companies { get; }
         IGenericRepository<Job> Jobs { get; }
