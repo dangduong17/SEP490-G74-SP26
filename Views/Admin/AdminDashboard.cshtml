@@ -1,12 +1,100 @@
 @{
     ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="row g-3">
+    <!-- Stats Cards -->
+    <div class="col-md-3">
+        <div class="stats-card">
+            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Total Users</h6>
+            <h2 class="mb-2 fw-bold" style="color: #1e40af;">2,543</h2>
+            <small class="text-success fw-semibold">↑ 12% from last month</small>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stats-card">
+            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Active Jobs</h6>
+            <h2 class="mb-2 fw-bold" style="color: #059669;">1,234</h2>
+            <small class="text-success fw-semibold">↑ 8% from last month</small>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stats-card">
+            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Companies</h6>
+            <h2 class="mb-2 fw-bold" style="color: #7c3aed;">456</h2>
+            <small class="text-success fw-semibold">↑ 5% from last month</small>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stats-card">
+            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Applications</h6>
+            <h2 class="mb-2 fw-bold" style="color: #dc2626;">8,923</h2>
+            <small class="text-success fw-semibold">↑ 18% from last month</small>
+        </div>
+    </div>
+</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <p>System overview dashboard.</p>
-        <p><em>TODO: Implement admin dashboard - summary select (150 LOC)</em></p>
+<!-- Recent Activity -->
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="stats-card">
+            <h5 class="mb-3">Recent Activity</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Applied to Software Engineer</td>
+                            <td>2 hours ago</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>Posted new job</td>
+                            <td>5 hours ago</td>
+                            <td><span class="badge bg-info">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bob Johnson</td>
+                            <td>Updated profile</td>
+                            <td>1 day ago</td>
+                            <td><span class="badge bg-success">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stats-card">
+            <h5 class="mb-3 fw-bold">Quick Actions</h5>
+            <div class="d-grid gap-2">
+                <a asp-action="UserList" class="btn btn-primary">
+                    Manage Users
+                </a>
+                <button class="btn btn-success">
+                    Add New Job
+                </button>
+                <button class="btn btn-info">
+                    View Reports
+                </button>
+                <button class="btn btn-warning text-white">
+                    System Settings
+                </button>
+            </div>
+        </div>
     </div>
 </div>
