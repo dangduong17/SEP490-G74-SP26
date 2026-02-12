@@ -22,7 +22,7 @@ namespace vn.edu.fpt.data
         public DbSet<Job> Jobs { get; set; }
         public DbSet<CV> CVs { get; set; }
         public DbSet<Application> Applications { get; set; }
-        public DbSet<Skill> Skills { get; set; }
+        // public DbSet<Skill> Skills { get; set; } // Removed duplicate
         public DbSet<JobCategory> JobCategories { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
