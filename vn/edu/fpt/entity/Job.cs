@@ -12,10 +12,6 @@ namespace vn.edu.fpt.entity
         [MaxLength(500)]
         public string Title { get; set; } = null!;
         
-        [Required]
-        [StringLength(100)]
-        public string Location { get; set; } = string.Empty;
-
         public int? JobCategoryId { get; set; }
         [ForeignKey("JobCategoryId")]
         public virtual JobCategory? JobCategory { get; set; }
@@ -25,18 +21,10 @@ namespace vn.edu.fpt.entity
         public virtual Location? JobLocation { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string JobType { get; set; } = string.Empty; // Full-time, Part-time, Contract
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal? SalaryMin { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal? SalaryMax { get; set; }
-
-        public DateTime? ExpiryDate { get; set; }
-
-        public JobStatus Status { get; set; } = JobStatus.Active;
+        public int CompanyId { get; set; }
+        
+        [ForeignKey(nameof(CompanyId))]
+        public virtual Company Company { get; set; } = null!;
 
         [Required]
         public int RecruiterId { get; set; }
@@ -62,8 +50,9 @@ namespace vn.edu.fpt.entity
         [MaxLength(100)]
         public string? Level { get; set; }
         
-        [MaxLength(100)]
-        public string? JobType { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string JobType { get; set; } = string.Empty; // Full-time, Part-time, Contract
         
         [MaxLength(100)]
         public string? WorkingType { get; set; }
@@ -94,6 +83,8 @@ namespace vn.edu.fpt.entity
         public DateTime? ApplicationDeadline { get; set; }
         
         public DateTime? StartDate { get; set; }
+
+        public DateTime? ExpiryDate { get; set; }
         
         [MaxLength(50)]
         public string Status { get; set; } = "Draft";
@@ -111,6 +102,9 @@ namespace vn.edu.fpt.entity
         public DateTime? UpdatedAt { get; set; }
         
         public DateTime? PublishedAt { get; set; }
+
+        [StringLength(100)]
+        public string Location { get; set; } = string.Empty;
         
         // Navigation properties
         public ICollection<JobSkill> Skills { get; set; } = new List<JobSkill>();
