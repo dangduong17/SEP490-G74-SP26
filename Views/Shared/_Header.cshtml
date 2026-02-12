@@ -272,22 +272,11 @@
                                 Admin Panel
                             </a>
                             
-                            <div class="dropdown">
-                                <button class="btn btn-link text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <span>@userName</span>
+                            <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form asp-controller="Auth" asp-action="Logout" method="post">
-                                            <button type="submit" class="dropdown-item text-danger">
-                                                Đăng xuất
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                            </form>
                         }
                         else if (userRole == "Recruiter")
                         {
@@ -295,22 +284,11 @@
                                 Recruiter Dashboard
                             </a>
                             
-                            <div class="dropdown">
-                                <button class="btn btn-link text-dark dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <span>@userName</span>
+                            <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form asp-controller="Auth" asp-action="Logout" method="post">
-                                            <button type="submit" class="dropdown-item text-danger">
-                                                Đăng xuất
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                            </form>
                         }
                         else if (userRole == "Candidate")
                         {
@@ -394,17 +372,15 @@
                                                 <span class="label">Nâng cấp tài khoản</span>
                                             </a>
                                         </div>
-                                        
-                                        <div class="profile-menu-section">
-                                            <form asp-controller="Auth" asp-action="Logout" method="post">
-                                                <button type="submit" class="profile-menu-item logout-btn" style="width: 100%; border: none; background: none; text-align: left;">
-                                                    <i class="fas fa-sign-out-alt"></i>
-                                                    <span class="label">Đăng xuất</span>
-                                                </button>
-                                            </form>
-                                        </div>
                                     </div>
                                 </div>
+                                
+                                <!-- Logout Button -->
+                                <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline ms-2">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
+                                    </button>
+                                </form>
                             </div>
                         }
                     }
