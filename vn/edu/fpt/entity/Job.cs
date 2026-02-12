@@ -13,11 +13,31 @@ namespace vn.edu.fpt.entity
         public string Title { get; set; } = null!;
         
         [Required]
-        public int CompanyId { get; set; }
-        
-        [ForeignKey(nameof(CompanyId))]
-        public Company Company { get; set; } = null!;
-        
+        [StringLength(100)]
+        public string Location { get; set; } = string.Empty;
+
+        public int? JobCategoryId { get; set; }
+        [ForeignKey("JobCategoryId")]
+        public virtual JobCategory? JobCategory { get; set; }
+
+        public int? LocationId { get; set; } // Reference to City/Province
+        [ForeignKey("LocationId")]
+        public virtual Location? JobLocation { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public string JobType { get; set; } = string.Empty; // Full-time, Part-time, Contract
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SalaryMin { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? SalaryMax { get; set; }
+
+        public DateTime? ExpiryDate { get; set; }
+
+        public JobStatus Status { get; set; } = JobStatus.Active;
+
         [Required]
         public int RecruiterId { get; set; }
         
