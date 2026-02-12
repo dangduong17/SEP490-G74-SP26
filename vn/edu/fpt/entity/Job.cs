@@ -19,6 +19,14 @@ namespace vn.edu.fpt.entity
         [StringLength(100)]
         public string Location { get; set; } = string.Empty;
 
+        public int? JobCategoryId { get; set; }
+        [ForeignKey("JobCategoryId")]
+        public virtual JobCategory? JobCategory { get; set; }
+
+        public int? LocationId { get; set; } // Reference to City/Province
+        [ForeignKey("LocationId")]
+        public virtual Location? JobLocation { get; set; }
+
         [Required]
         [StringLength(50)]
         public string JobType { get; set; } = string.Empty; // Full-time, Part-time, Contract

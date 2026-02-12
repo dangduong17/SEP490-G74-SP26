@@ -16,6 +16,8 @@ namespace vn.edu.fpt.data
         public DbSet<CV> CVs { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<JobCategory> JobCategories { get; set; }
+        public DbSet<Location> Locations { get; set; }
         public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Payment> Payments { get; set; }

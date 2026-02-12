@@ -16,6 +16,8 @@ namespace vn.edu.fpt.repository
             CVs = new GenericRepository<CV>(_context);
             Applications = new GenericRepository<Application>(_context);
             Skills = new GenericRepository<Skill>(_context);
+            JobCategories = new GenericRepository<JobCategory>(_context);
+            Locations = new GenericRepository<Location>(_context);
             SubscriptionPlans = new GenericRepository<SubscriptionPlan>(_context);
             Subscriptions = new GenericRepository<Subscription>(_context);
             Payments = new GenericRepository<Payment>(_context);
@@ -29,6 +31,8 @@ namespace vn.edu.fpt.repository
         public IGenericRepository<CV> CVs { get; private set; }
         public IGenericRepository<Application> Applications { get; private set; }
         public IGenericRepository<Skill> Skills { get; private set; }
+        public IGenericRepository<JobCategory> JobCategories { get; private set; }
+        public IGenericRepository<Location> Locations { get; private set; }
         public IGenericRepository<SubscriptionPlan> SubscriptionPlans { get; private set; }
         public IGenericRepository<Subscription> Subscriptions { get; private set; }
         public IGenericRepository<Payment> Payments { get; private set; }

@@ -10,6 +10,8 @@ namespace vn.edu.fpt.repository
         IGenericRepository<CV> CVs { get; }
         IGenericRepository<Application> Applications { get; }
         IGenericRepository<Skill> Skills { get; }
+        IGenericRepository<JobCategory> JobCategories { get; }
+        IGenericRepository<Location> Locations { get; }
         IGenericRepository<SubscriptionPlan> SubscriptionPlans { get; }
         IGenericRepository<Subscription> Subscriptions { get; }
         IGenericRepository<Payment> Payments { get; }
