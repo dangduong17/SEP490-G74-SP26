@@ -3,37 +3,42 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class CV : BaseEntity
+    public class CV
     {
-        [Required]
-        [StringLength(200)]
-        public string Title { get; set; } = string.Empty;
-
-        public string? Summary { get; set; }
-
-        public string? Experience { get; set; }
-
-        public string? Education { get; set; }
-
-        public string? Certifications { get; set; }
-
-        [StringLength(500)]
-        public string? FilePath { get; set; } // Path to uploaded CV file
-
-        [StringLength(50)]
-        public string? FileType { get; set; } // PDF, DOC, etc.
-
+        [Key]
+        public int Id { get; set; }
+        
         [Required]
         public int CandidateId { get; set; }
-
+        
+        [ForeignKey(nameof(CandidateId))]
+        public Candidate Candidate { get; set; } = null!;
+        
+        [Required]
+        [MaxLength(255)]
+        public string Title { get; set; } = null!;
+        
+        [MaxLength(500)]
+        public string? FilePath { get; set; }
+        
+        [MaxLength(100)]
+        public string? TemplateId { get; set; }
+        
+        [Column(TypeName = "text")]
+        public string? JsonData { get; set; }
+        
         public bool IsDefault { get; set; } = false;
-
+        
+        public int ViewCount { get; set; } = 0;
+        
+        public int DownloadCount { get; set; } = 0;
+        
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
+        public DateTime? UpdatedAt { get; set; }
+        
         // Navigation properties
-        [ForeignKey("CandidateId")]
-        public virtual User? Candidate { get; set; }
-
-        public virtual ICollection<Application>? Applications { get; set; }
-        public virtual ICollection<Skill>? Skills { get; set; }
+        public ICollection<Application> Applications { get; set; } = new List<Application>();
     }
 }
 

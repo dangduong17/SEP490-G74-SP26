@@ -3,18 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class Job : BaseEntity
+    public class Job
     {
+        [Key]
+        public int Id { get; set; }
+        
         [Required]
-        [StringLength(200)]
-        public string Title { get; set; } = string.Empty;
-
-        [Required]
-        public string Description { get; set; } = string.Empty;
-
-        [Required]
-        public string Requirements { get; set; } = string.Empty;
-
+        [MaxLength(500)]
+        public string Title { get; set; } = null!;
+        
         [Required]
         [StringLength(100)]
         public string Location { get; set; } = string.Empty;
@@ -43,28 +40,82 @@ namespace vn.edu.fpt.entity
 
         [Required]
         public int RecruiterId { get; set; }
-
-        [ForeignKey("RecruiterId")]
-        public virtual User? Recruiter { get; set; }
-
-        public int? CompanyId { get; set; }
-
-        [ForeignKey("CompanyId")]
-        public virtual Company? Company { get; set; }
-
+        
+        [ForeignKey(nameof(RecruiterId))]
+        public Recruiter Recruiter { get; set; } = null!;
+        
+        public int? CompanyAddressId { get; set; }
+        
+        [ForeignKey(nameof(CompanyAddressId))]
+        public CompanyAddress? CompanyAddress { get; set; }
+        
+        [Required]
+        [Column(TypeName = "text")]
+        public string Description { get; set; } = null!;
+        
+        [Column(TypeName = "text")]
+        public string? Requirements { get; set; }
+        
+        [Column(TypeName = "text")]
+        public string? Benefits { get; set; }
+        
+        [MaxLength(100)]
+        public string? Level { get; set; }
+        
+        [MaxLength(100)]
+        public string? JobType { get; set; }
+        
+        [MaxLength(100)]
+        public string? WorkingType { get; set; }
+        
+        public decimal? MinSalary { get; set; }
+        
+        public decimal? MaxSalary { get; set; }
+        
+        public bool IsNegotiable { get; set; } = false;
+        
+        [MaxLength(50)]
+        public string? SalaryCurrency { get; set; } = "VND";
+        
+        public int NumberOfPositions { get; set; } = 1;
+        
+        [MaxLength(100)]
+        public string? Gender { get; set; }
+        
+        public int? MinAge { get; set; }
+        
+        public int? MaxAge { get; set; }
+        
+        public int? MinYearsOfExperience { get; set; }
+        
+        [MaxLength(100)]
+        public string? DegreeRequired { get; set; }
+        
+        public DateTime? ApplicationDeadline { get; set; }
+        
+        public DateTime? StartDate { get; set; }
+        
+        [MaxLength(50)]
+        public string Status { get; set; } = "Draft";
+        
+        public int ViewCount { get; set; } = 0;
+        
+        public int ApplicationCount { get; set; } = 0;
+        
+        public bool IsFeatured { get; set; } = false;
+        
+        public bool IsUrgent { get; set; } = false;
+        
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        
+        public DateTime? UpdatedAt { get; set; }
+        
+        public DateTime? PublishedAt { get; set; }
+        
         // Navigation properties
-        public virtual ICollection<Application>? Applications { get; set; }
-        public virtual ICollection<SavedJob>? SavedJobs { get; set; }
-        public virtual ICollection<Skill>? Skills { get; set; }
-    }
-
-    public enum JobStatus
-    {
-        Active = 1,
-        Closed = 2,
-        Draft = 3,
-        Expired = 4,
-        PendingApproval = 5
+        public ICollection<JobSkill> Skills { get; set; } = new List<JobSkill>();
+        public ICollection<Application> Applications { get; set; } = new List<Application>();
+        public ICollection<SavedJob> SavedByUsers { get; set; } = new List<SavedJob>();
     }
 }
 

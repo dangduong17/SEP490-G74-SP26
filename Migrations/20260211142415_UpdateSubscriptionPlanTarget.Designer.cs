@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vn.edu.fpt.data;
 
@@ -11,9 +12,11 @@ using vn.edu.fpt.data;
 namespace SEP490_G74_RJMS.Migrations
 {
     [DbContext(typeof(RJMSDbContext))]
-    partial class RJMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260211142415_UpdateSubscriptionPlanTarget")]
+    partial class UpdateSubscriptionPlanTarget
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -610,10 +613,11 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Property<bool>("IsCurrentlyStudying")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("JobCategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Major")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("JobType")
+                    b.Property<string>("School")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -684,11 +688,8 @@ namespace SEP490_G74_RJMS.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecruiterId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsNegotiable")
                         .HasColumnType("bit");
@@ -766,9 +767,7 @@ namespace SEP490_G74_RJMS.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("JobCategoryId");
-
-                    b.HasIndex("LocationId");
+                    b.HasIndex("CreatedAt");
 
                     b.HasIndex("RecruiterId");
 
@@ -777,62 +776,22 @@ namespace SEP490_G74_RJMS.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.JobCategory", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.JobSkill", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("JobId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("JobCategories");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Location", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SkillId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsRequired")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.HasKey("JobId", "SkillId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("SkillId");
 
-                    b.ToTable("Locations");
+                    b.ToTable("JobSkills");
                 });
 
             modelBuilder.Entity("vn.edu.fpt.entity.Notification", b =>
@@ -1414,15 +1373,7 @@ namespace SEP490_G74_RJMS.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("vn.edu.fpt.entity.JobCategory", "JobCategory")
-                        .WithMany("Jobs")
-                        .HasForeignKey("JobCategoryId");
-
-                    b.HasOne("vn.edu.fpt.entity.Location", "JobLocation")
-                        .WithMany("Jobs")
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("vn.edu.fpt.entity.User", "Recruiter")
+                    b.HasOne("vn.edu.fpt.entity.Recruiter", "Recruiter")
                         .WithMany("Jobs")
                         .HasForeignKey("RecruiterId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1430,9 +1381,7 @@ namespace SEP490_G74_RJMS.Migrations
 
                     b.Navigation("Company");
 
-                    b.Navigation("JobCategory");
-
-                    b.Navigation("JobLocation");
+                    b.Navigation("CompanyAddress");
 
                     b.Navigation("Recruiter");
                 });
@@ -1598,17 +1547,12 @@ namespace SEP490_G74_RJMS.Migrations
                     b.Navigation("Skills");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.JobCategory", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.Recruiter", b =>
                 {
                     b.Navigation("Jobs");
                 });
 
-            modelBuilder.Entity("vn.edu.fpt.entity.Location", b =>
-                {
-                    b.Navigation("Jobs");
-                });
-
-            modelBuilder.Entity("vn.edu.fpt.entity.Subscription", b =>
+            modelBuilder.Entity("vn.edu.fpt.entity.Skill", b =>
                 {
                     b.Navigation("Candidates");
 

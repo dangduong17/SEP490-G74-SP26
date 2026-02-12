@@ -3,28 +3,28 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vn.edu.fpt.entity
 {
-    public class Payment : BaseEntity
+    public class Payment
     {
-        [Required]
+        [Key]
+        public int Id { get; set; }
+        
         public int SubscriptionId { get; set; }
-
-        [ForeignKey("SubscriptionId")]
-        public virtual Subscription? Subscription { get; set; }
-
-        [Required]
+        
+        [ForeignKey(nameof(SubscriptionId))]
+        public Subscription Subscription { get; set; } = null!;
+        
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Amount { get; set; }
-
+        
+        public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
+        
+        [MaxLength(100)]
         public string? TransactionId { get; set; }
-
-        public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
-
-        public string? PaymentMethod { get; set; } // e.g., VNPay, Momo, Credit Card
-    }
-
-    public enum PaymentStatus
-    {
-        Pending = 1,
-        Success = 2,
-        Failed = 3
+        
+        [MaxLength(50)]
+        public string Status { get; set; } = "Pending";
+        
+        [MaxLength(50)]
+        public string? PaymentMethod { get; set; }
     }
 }
