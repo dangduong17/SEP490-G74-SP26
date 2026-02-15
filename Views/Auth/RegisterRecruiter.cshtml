@@ -1,6 +1,6 @@
 @model vn.edu.fpt.dto.RegisterDto
 @{
-    ViewData["Title"] = "Đăng ký Người dùng";
+    ViewData["Title"] = "Đăng ký Nhà tuyển dụng";
 }
 
 <section class="auth-section">
@@ -9,14 +9,14 @@
             <div class="col-md-6 col-lg-5">
                 <div class="auth-card">
                     <div class="auth-header text-center">
-                        <h2 class="auth-title">Đăng ký tài khoản Người dùng</h2>
-                        <p class="auth-subtitle">Tạo tài khoản để trải nghiệm Finding Jobs</p>
+                        <h2 class="auth-title">Đăng ký Nhà tuyển dụng</h2>
+                        <p class="auth-subtitle">Tạo tài khoản để đăng tin tuyển dụng trên Finding Jobs</p>
                     </div>
                     
-                    <form asp-action="Register" method="post" class="auth-form">
+                    <form asp-action="RegisterRecruiter" method="post" class="auth-form">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                         
-                        <input type="hidden" name="role" value="User" />
+                        <input type="hidden" name="role" value="Recruiter" />
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -45,8 +45,8 @@
                         </div>
                         
                         <div class="mb-3">
-                            <a asp-action="RegisterRecruiter" class="btn btn-outline-secondary w-100">
-                                <i class="bi bi-briefcase me-2"></i>Bạn là Nhà tuyển dụng? Đăng ký tại đây
+                            <a asp-action="Register" class="btn btn-outline-secondary w-100">
+                                <i class="bi bi-person me-2"></i>Bạn là Người dùng tìm việc? Đăng ký tại đây
                             </a>
                         </div>
 
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary w-100 btn-auth">Đăng ký</button>
+                        <button type="submit" class="btn btn-primary w-100 btn-auth">Đăng ký Nhà tuyển dụng</button>
                         
                         <div class="auth-divider">
                             <span>hoặc</span>

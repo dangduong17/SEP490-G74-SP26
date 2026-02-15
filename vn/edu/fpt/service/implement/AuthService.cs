@@ -13,17 +13,20 @@ namespace vn.edu.fpt.service.Implementations
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
         public AuthService(
             UserManager<User> userManager, 
             RoleManager<IdentityRole> roleManager, 
             IUnitOfWork unitOfWork,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _unitOfWork = unitOfWork;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<string?> LoginAsync(LoginDto loginDto)
@@ -39,10 +42,13 @@ namespace vn.edu.fpt.service.Implementations
             return "dummy-token"; 
         }
 
-        public async Task<bool> RegisterAsync(RegisterDto registerDto)
+        public async Task<(bool Success, string? ErrorMessage)> RegisterAsync(RegisterDto registerDto, string confirmationLink)
         {
             var userExists = await _userManager.FindByEmailAsync(registerDto.Email);
-            if (userExists != null) return false;
+            if (userExists != null) 
+            {
+                return (false, "Email này đã được đăng ký. Vui lòng sử dụng email khác hoặc đăng nhập.");
+            }
 
             var user = new User
             {
@@ -54,7 +60,10 @@ namespace vn.edu.fpt.service.Implementations
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-            if (!result.Succeeded) return false;
+            if (!result.Succeeded) 
+            {
+                return (false, "Đăng ký thất bại. Vui lòng thử lại.");
+            }
 
             // Ensure Role Exists
             if (!await _roleManager.RoleExistsAsync(registerDto.Role))
@@ -93,10 +102,32 @@ namespace vn.edu.fpt.service.Implementations
                     };
                     await _unitOfWork.Admins.AddAsync(admin);
                     break;
+
+                case "user":
+                    // Base user, no additional profile entity needed
+                    break;
             }
 
+            // Generate Email Confirmation Token
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var fullConfirmationLink = $"{confirmationLink}&token={Uri.EscapeDataString(token)}";
+
+            // Send Confirmation Email
+            var subject = "Confirm your email - Finding Jobs";
+            var message = $"Chào bạn {registerDto.LastName} {registerDto.FirstName},<br/><br/>" +
+                          $"Cảm ơn bạn đã đăng ký tài khoản tại Finding Jobs.<br/>" +
+                          $"Vui lòng kích hoạt tài khoản của bạn bằng cách <a href='{fullConfirmationLink}'>nhấn vào đây</a>.<br/><br/>" +
+                          $"Lưu ý: Liên kết này sẽ hết hạn trong vòng <b>5 phút</b>.<br/><br/>" +
+                          $"Trân trọng,<br/>Finding Jobs Team";
+            await _emailService.SendEmailAsync(user.Email, subject, message);
+            
             await _unitOfWork.CompleteAsync();
-            return true;
+            return (true, null);
+        }
+
+        public async Task SendRawEmailAsync(string email, string subject, string message)
+        {
+            await _emailService.SendEmailAsync(email, subject, message);
         }
     }
 }
