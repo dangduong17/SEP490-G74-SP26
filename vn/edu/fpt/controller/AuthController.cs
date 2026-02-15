@@ -75,19 +75,19 @@ namespace vn.edu.fpt.controller
 
             if (user.EmailConfirmed)
             {
-                ViewBag.Message = "Email này đã được xác nhận trước đó. Bạn có thể đăng nhập.";
+                TempData["InfoToast"] = "Email này đã được xác nhận trước đó. Bạn có thể đăng nhập.";
                 return View("Login");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                ViewBag.Message = "Chúc mừng! Email đã được xác nhận thành công. Bạn có thể đăng nhập ngay bây giờ.";
+                TempData["SuccessToast"] = "Chúc mừng! Email đã được xác nhận thành công. Bạn có thể đăng nhập ngay bây giờ.";
                 return View("Login");
             }
 
             // If we are here, confirmation failed (likely expired link)
-            ViewBag.ErrorMessage = "Liên kết xác nhận đã hết hạn hoặc không hợp lệ.";
+            TempData["ErrorToast"] = "Liên kết xác nhận đã hết hạn hoặc không hợp lệ.";
             ViewBag.UserEmail = email; // For resend button
             return View("ConfirmEmailFailed");
         }
@@ -206,6 +206,71 @@ namespace vn.edu.fpt.controller
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                TempData["ErrorToast"] = "Vui lòng nhập email.";
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                // For security reasons, don't reveal if user exists or not
+                TempData["InfoToast"] = "Nếu email này tồn tại trong hệ thống, mật khẩu mới đã được gửi đi.";
+                return RedirectToAction("Login");
+            }
+
+            // [VALIDATION] Check if email is confirmed
+            if (!user.EmailConfirmed)
+            {
+                TempData["ErrorToast"] = "Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email để kích hoạt trước khi đặt lại mật khẩu.";
+                return View();
+            }
+
+            // Generate a new random password (6 alphanumeric characters)
+            string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random = new Random();
+            string newPassword = new string(Enumerable.Repeat(allowedChars, 6)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            // Reset password
+            var removeResult = await _userManager.RemovePasswordAsync(user);
+            if (!removeResult.Succeeded)
+            {
+                TempData["ErrorToast"] = "Không thể đặt lại mật khẩu. Vui lòng thử lại sau.";
+                return View();
+            }
+
+            var addResult = await _userManager.AddPasswordAsync(user, newPassword);
+            if (!addResult.Succeeded)
+            {
+                TempData["ErrorToast"] = "Không thể thêm mật khẩu mới. Vui lòng thử lại sau.";
+                return View();
+            }
+
+            // Send email
+            var subject = "Mật khẩu mới của bạn - Finding Jobs";
+            var message = $"Chào bạn {user.LastName} {user.FirstName},<br/><br/>" +
+                          $"Mật khẩu của bạn đã được đặt lại theo yêu cầu.<br/>" +
+                          $"Mật khẩu mới của bạn là: <b>{newPassword}</b><br/><br/>" +
+                          $"Vui lòng đăng nhập và đổi mật khẩu ngay để đảm bảo an toàn.<br/><br/>" +
+                          $"Trân trọng,<br/>Finding Jobs Team";
+
+            await _authService.SendRawEmailAsync(user.Email!, subject, message);
+
+            TempData["SuccessToast"] = "Mật khẩu mới đã được gửi đến email của bạn.";
+            return RedirectToAction("Login");
         }
     }
 }
