@@ -9,6 +9,7 @@ namespace vn.edu.fpt.repository
         IGenericRepository<Admin> Admins { get; }
         IGenericRepository<User> Users { get; }
         IGenericRepository<Company> Companies { get; }
+        IGenericRepository<CompanyAddress> CompanyAddresses { get; }
         IGenericRepository<Job> Jobs { get; }
         IGenericRepository<CV> CVs { get; }
         IGenericRepository<Application> Applications { get; }

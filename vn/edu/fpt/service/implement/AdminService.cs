@@ -210,6 +210,16 @@ namespace vn.edu.fpt.service.Implementations
         {
             var validateResult = ValidateRecruiterRequired(model.PhoneNumber, model.Position);
             if (!validateResult.Succeeded) return validateResult;
+            if (!model.ProvinceCode.HasValue || !model.WardCode.HasValue ||
+                string.IsNullOrWhiteSpace(model.ProvinceName) ||
+                string.IsNullOrWhiteSpace(model.WardName) ||
+                string.IsNullOrWhiteSpace(model.WorkAddress))
+            {
+                return ServiceResult.Failed(
+                    new ServiceError { Key = nameof(model.WorkAddress), Message = "Địa chỉ làm việc là bắt buộc." },
+                    new ServiceError { Key = nameof(model.ProvinceCode), Message = "Tỉnh/Thành phố là bắt buộc." },
+                    new ServiceError { Key = nameof(model.WardCode), Message = "Phường/Xã là bắt buộc." });
+            }
 
             if (!string.IsNullOrWhiteSpace(model.CompanyTaxCode))
             {
@@ -242,6 +252,19 @@ namespace vn.edu.fpt.service.Implementations
             profile.IsVerified = true;
             profile.VerifiedAt = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
             await _unitOfWork.Recruiters.AddAsync(profile);
+
+            var companyAddress = new CompanyAddress
+            {
+                CompanyId = company.Id,
+                Address = model.WorkAddress,
+                City = model.ProvinceName,
+                Ward = model.WardName,
+                AddressType = "Workplace",
+                IsHeadquarter = true,
+                Phone = model.CompanyPhone ?? model.PhoneNumber,
+                CreatedAt = vn.edu.fpt.helper.DateTimeHelper.NowVietnam
+            };
+            await _unitOfWork.CompanyAddresses.AddAsync(companyAddress);
             await _unitOfWork.CompleteAsync();
 
             return ServiceResult.Success();

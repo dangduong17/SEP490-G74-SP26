@@ -15,6 +15,7 @@ namespace vn.edu.fpt.repository
             Admins = new GenericRepository<Admin>(_context);
             Users = new GenericRepository<User>(_context);
             Companies = new GenericRepository<Company>(_context);
+            CompanyAddresses = new GenericRepository<CompanyAddress>(_context);
             Jobs = new GenericRepository<Job>(_context);
             CVs = new GenericRepository<CV>(_context);
             Applications = new GenericRepository<Application>(_context);
@@ -33,6 +34,7 @@ namespace vn.edu.fpt.repository
         public IGenericRepository<Admin> Admins { get; private set; }
         public IGenericRepository<User> Users { get; private set; }
         public IGenericRepository<Company> Companies { get; private set; }
+        public IGenericRepository<CompanyAddress> CompanyAddresses { get; private set; }
         public IGenericRepository<Job> Jobs { get; private set; }
         public IGenericRepository<CV> CVs { get; private set; }
         public IGenericRepository<Application> Applications { get; private set; }

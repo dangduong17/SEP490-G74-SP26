@@ -2,37 +2,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace vn.edu.fpt.dto
 {
-    public class AdminCreateRecruiterViewModel
+    public class RecruiterProfileUpdateViewModel
     {
-        [Required(ErrorMessage = "Email là bắt buộc.")]
-        [EmailAddress]
-        public string Email { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Mật khẩu là bắt buộc.")]
-        [MinLength(6, ErrorMessage = "Mật khẩu tối thiểu 6 ký tự.")]
-        public string Password { get; set; } = string.Empty;
-
-        [Required(ErrorMessage = "Họ là bắt buộc.")]
+        [Required(ErrorMessage = "Ho la bat buoc.")]
         [MaxLength(100)]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Tên là bắt buộc.")]
+        [Required(ErrorMessage = "Ten la bat buoc.")]
         [MaxLength(100)]
         public string LastName { get; set; } = string.Empty;
 
-        [Phone]
+        [Required(ErrorMessage = "So dien thoai la bat buoc.")]
         [MaxLength(20)]
-        [Required(ErrorMessage = "Số điện thoại là bắt buộc.")]
-        public string? PhoneNumber { get; set; }
+        public string Phone { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Vị trí công việc là bắt buộc.")]
+        [Required(ErrorMessage = "Vi tri cong viec la bat buoc.")]
         [MaxLength(100)]
-        public string? Position { get; set; }
+        public string Position { get; set; } = string.Empty;
 
         [MaxLength(100)]
         public string? Department { get; set; }
 
-        [Required(ErrorMessage = "Tên công ty là bắt buộc.")]
+        [Required(ErrorMessage = "Ten cong ty la bat buoc.")]
         [MaxLength(255)]
         public string CompanyName { get; set; } = string.Empty;
 
@@ -48,8 +39,8 @@ namespace vn.edu.fpt.dto
         [MaxLength(500)]
         public string? CompanyWebsite { get; set; }
 
-        [EmailAddress]
         [MaxLength(100)]
+        [EmailAddress]
         public string? CompanyEmail { get; set; }
 
         [MaxLength(20)]
