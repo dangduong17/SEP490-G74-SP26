@@ -1,23 +1,13 @@
-@model vn.edu.fpt.dto.AdminCreateRecruiterViewModel
+@model vn.edu.fpt.dto.RecruiterProfileUpdateViewModel
 @{
-    ViewData["Title"] = "Tạo nhà tuyển dụng";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Chỉnh sửa hồ sơ nhà tuyển dụng";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
 }
 
-<form asp-action="CreateRecruiter" method="post" class="row g-3">
+<form asp-action="EditProfile" method="post" class="row g-3">
     @Html.AntiForgeryToken()
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="col-md-6">
-        <label asp-for="Email" class="form-label">Email *</label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-    <div class="col-md-6">
-        <label asp-for="Password" class="form-label">Mật khẩu *</label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
     <div class="col-md-6">
         <label asp-for="FirstName" class="form-label">Họ *</label>
         <input asp-for="FirstName" class="form-control" />
@@ -29,9 +19,9 @@
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
     <div class="col-md-6">
-        <label asp-for="PhoneNumber" class="form-label">Số điện thoại *</label>
-        <input asp-for="PhoneNumber" class="form-control" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        <label asp-for="Phone" class="form-label">Số điện thoại *</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
     </div>
     <div class="col-md-6">
         <label asp-for="Position" class="form-label">Vị trí công việc *</label>
@@ -43,10 +33,9 @@
         <input asp-for="Department" class="form-control" />
     </div>
 
-    <div class="col-12">
-        <hr />
-        <h6 class="mb-1">Thông tin công ty</h6>
-    </div>
+    <div class="col-12"><hr /></div>
+    <div class="col-12"><h5 class="mb-0">Thông tin công ty</h5></div>
+
     <div class="col-md-6">
         <label asp-for="CompanyName" class="form-label">Tên công ty *</label>
         <input asp-for="CompanyName" class="form-control" />
@@ -74,18 +63,16 @@
         <input asp-for="CompanyEmail" class="form-control" />
     </div>
     <div class="col-md-6">
-        <label asp-for="CompanyPhone" class="form-label">SĐT công ty</label>
+        <label asp-for="CompanyPhone" class="form-label">Số điện thoại công ty</label>
         <input asp-for="CompanyPhone" class="form-control" />
     </div>
     <div class="col-12">
         <label asp-for="CompanyDescription" class="form-label">Mô tả công ty</label>
-        <textarea asp-for="CompanyDescription" class="form-control" rows="3"></textarea>
+        <textarea asp-for="CompanyDescription" class="form-control" rows="4"></textarea>
     </div>
 
     <div class="col-12"><hr /></div>
-    <div class="col-12">
-        <h6 class="mb-1">Địa chỉ làm việc</h6>
-    </div>
+    <div class="col-12"><h5 class="mb-0">Địa chỉ làm việc</h5></div>
     <div class="col-md-6">
         <label class="form-label">Tỉnh/Thành phố *</label>
         <select id="provinceSelect" class="form-select">
@@ -108,13 +95,13 @@
     </div>
     <div class="col-12">
         <label asp-for="WorkAddress" class="form-label">Địa chỉ chi tiết *</label>
-        <input asp-for="WorkAddress" class="form-control" placeholder="Ví dụ: Tầng 5, Tòa nhà ABC, số 12..." />
+        <input asp-for="WorkAddress" class="form-control" />
         <span asp-validation-for="WorkAddress" class="text-danger"></span>
     </div>
 
-    <div class="col-12 d-flex gap-2">
-        <button type="submit" class="btn btn-topcv">Tạo nhà tuyển dụng</button>
-        <a asp-action="UserList" class="btn btn-outline-secondary">Quay lại</a>
+    <div class="col-12 d-flex gap-2 justify-content-end">
+        <a asp-action="RecruiterDashboard" class="btn btn-outline-secondary">Quay lại</a>
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
     </div>
 </form>
 
@@ -137,13 +124,21 @@
                     opt.textContent = p.name;
                     provinceSelect.appendChild(opt);
                 });
+
+                if (provinceNameInput.value) {
+                    const matched = Array.from(provinceSelect.options).find(o => o.text === provinceNameInput.value);
+                    if (matched) {
+                        provinceSelect.value = matched.value;
+                        provinceCodeInput.value = matched.value;
+                        await loadWards(matched.value, wardNameInput.value);
+                    }
+                }
             }
 
-            async function loadWards(provinceCode) {
+            async function loadWards(provinceCode, preselectWardName) {
                 wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
                 wardSelect.disabled = true;
                 wardCodeInput.value = "";
-                wardNameInput.value = "";
                 if (!provinceCode) return;
 
                 const response = await fetch(`/Location/Wards?provinceCode=${provinceCode}`);
@@ -155,13 +150,23 @@
                     wardSelect.appendChild(opt);
                 });
                 wardSelect.disabled = false;
+
+                if (preselectWardName) {
+                    const matched = Array.from(wardSelect.options).find(o => o.text === preselectWardName);
+                    if (matched) {
+                        wardSelect.value = matched.value;
+                        wardCodeInput.value = matched.value;
+                        wardNameInput.value = matched.text;
+                    }
+                }
             }
 
             provinceSelect.addEventListener('change', async function () {
                 const selected = provinceSelect.options[provinceSelect.selectedIndex];
                 provinceCodeInput.value = selected.value || "";
                 provinceNameInput.value = selected.text && selected.value ? selected.text : "";
-                await loadWards(selected.value);
+                wardNameInput.value = "";
+                await loadWards(selected.value, "");
             });
 
             wardSelect.addEventListener('change', function () {

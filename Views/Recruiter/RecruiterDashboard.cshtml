@@ -1,160 +1,45 @@
+@model vn.edu.fpt.dto.RecruiterDashboardViewModel
 @{
-    ViewData["Title"] = "Dashboard Nhà tuyển dụng";
+    ViewData["Title"] = "Dashboard nhà tuyển dụng";
+    Layout = "~/Views/Shared/_RecruiterLayout.cshtml";
 }
 
-<section class="page-section">
-    <div class="container">
-        <h2 class="page-title">Dashboard Nhà tuyển dụng</h2>
-
-        <!-- Stats Cards -->
-        <div class="row mb-4">
-            <div class="col-md-3 mb-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-primary">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>15</h3>
-                        <p>Tin tuyển dụng</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-success">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>245</h3>
-                        <p>Ứng viên</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-warning">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>48</h3>
-                        <p>Chờ xem xét</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="stat-card">
-                    <div class="stat-icon bg-info">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-content">
-                        <h3>1,234</h3>
-                        <p>Lượt xem</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Recent Applications -->
-            <div class="col-lg-8 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Ứng viên mới nhất</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Ứng viên</th>
-                                        <th>Vị trí</th>
-                                        <th>Ngày nộp</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <strong>Nguyễn Văn A</strong>
-                                                <br>
-                                                <small class="text-muted">3 năm kinh nghiệm</small>
-                                            </td>
-                                            <td>Nhân viên kinh doanh</td>
-                                            <td>06/02/2026</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-outline-primary">Xem CV</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Thao tác nhanh</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-grid gap-2">
-                            <a asp-action="CreateJob" class="btn btn-primary">
-                                Đăng tin tuyển dụng mới
-                            </a>
-                            <a asp-action="JobPostingList" class="btn btn-outline-primary">
-                                Quản lý tin tuyển dụng
-                            </a>
-                            <a href="#" class="btn btn-outline-secondary">
-                                Tìm kiếm ứng viên
-                            </a>
-                            <a href="#" class="btn btn-outline-info">
-                                Báo cáo thống kê
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Job Performance -->
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h5 class="mb-0">Hiệu suất tuyển dụng</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Tỷ lệ phản hồi</small>
-                                <small><strong>75%</strong></small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" style="width: 75%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Tin đang hoạt động</small>
-                                <small><strong>8/15</strong></small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-primary" style="width: 53%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="d-flex justify-content-between mb-1">
-                                <small>Hồ sơ chất lượng</small>
-                                <small><strong>60%</strong></small>
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar bg-info" style="width: 60%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="mb-3">Thông tin nhà tuyển dụng</h5>
+                <p class="mb-1"><strong>Họ tên:</strong> @Model.RecruiterName</p>
+                <p class="mb-1"><strong>Email:</strong> @Model.RecruiterEmail</p>
+                <p class="mb-1"><strong>Số điện thoại:</strong> @(string.IsNullOrWhiteSpace(Model.RecruiterPhone) ? "-" : Model.RecruiterPhone)</p>
+                <p class="mb-0"><strong>Vị trí:</strong> @(string.IsNullOrWhiteSpace(Model.Position) ? "-" : Model.Position)</p>
             </div>
         </div>
     </div>
-</section>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="mb-3">Thông tin công ty</h5>
+                <p class="mb-1"><strong>Tên công ty:</strong> @(string.IsNullOrWhiteSpace(Model.CompanyName) ? "-" : Model.CompanyName)</p>
+                <p class="mb-1"><strong>Lĩnh vực:</strong> @(string.IsNullOrWhiteSpace(Model.CompanyIndustry) ? "-" : Model.CompanyIndustry)</p>
+                <p class="mb-0">
+                    <strong>Trạng thái xác minh:</strong>
+                    @if (Model.IsVerified)
+                    {
+                        <span class="badge bg-success">Đã xác minh</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Chưa xác minh</span>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-wrap gap-2">
+    <a asp-action="EditProfile" class="btn btn-outline-primary">Chỉnh sửa hồ sơ</a>
+    <a asp-action="CreateJob" class="btn btn-primary">Đăng tin tuyển dụng mới</a>
+    <a asp-action="JobPostingList" class="btn btn-outline-primary">Quản lý tin tuyển dụng</a>
+</div>

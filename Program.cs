@@ -60,6 +60,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IRecruiterService, RecruiterService>();
+builder.Services.AddHttpClient<ILocationLookupService, LocationLookupService>(client =>
+{
+    client.BaseAddress = new Uri("https://provinces.open-api.vn");
+});
 
 var app = builder.Build();
 
