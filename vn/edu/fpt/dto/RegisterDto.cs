@@ -13,6 +13,10 @@ namespace vn.edu.fpt.dto
         public string Password { get; set; } = null!;
 
         [Required]
+        [Compare("Password", ErrorMessage = "Mật khẩu xác nhận không khớp.")]
+        public string ConfirmPassword { get; set; } = null!;
+
+        [Required]
         public string FirstName { get; set; } = null!;
 
         [Required]

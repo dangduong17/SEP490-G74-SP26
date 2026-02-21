@@ -40,6 +40,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddEntityFrameworkStores<RJMSDbContext>()
 .AddDefaultTokenProviders();
 
+// Set Token Lifespan (Email confirmation, Password Reset, etc.)
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+    options.TokenLifespan = TimeSpan.FromMinutes(5);
+});
+
 // Configure Cookie Authentication for MVC
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -49,7 +55,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-// Register UnitOfWork
+// Register Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
