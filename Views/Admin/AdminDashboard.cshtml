@@ -1,100 +1,57 @@
+@model vn.edu.fpt.dto.AdminDashboardViewModel
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Bảng điều khiển quản trị";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row g-3">
-    <!-- Stats Cards -->
-    <div class="col-md-3">
-        <div class="stats-card">
-            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Total Users</h6>
-            <h2 class="mb-2 fw-bold" style="color: #1e40af;">2,543</h2>
-            <small class="text-success fw-semibold">↑ 12% from last month</small>
+    <div class="col-md-4">
+        <div class="p-3 border rounded-3 bg-light h-100">
+            <div class="text-muted small">Tổng người dùng</div>
+            <h3 class="fw-bold text-success mb-1">@Model.TotalUsers</h3>
+            <div class="small">Tất cả tài khoản đã đăng ký</div>
         </div>
     </div>
-    
-    <div class="col-md-3">
-        <div class="stats-card">
-            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Active Jobs</h6>
-            <h2 class="mb-2 fw-bold" style="color: #059669;">1,234</h2>
-            <small class="text-success fw-semibold">↑ 8% from last month</small>
+    <div class="col-md-4">
+        <div class="p-3 border rounded-3 bg-light h-100">
+            <div class="text-muted small">Đang hoạt động</div>
+            <h3 class="fw-bold text-primary mb-1">@Model.ActiveUsers</h3>
+            <div class="small">Trạng thái hiện tại</div>
         </div>
     </div>
-    
-    <div class="col-md-3">
-        <div class="stats-card">
-            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Companies</h6>
-            <h2 class="mb-2 fw-bold" style="color: #7c3aed;">456</h2>
-            <small class="text-success fw-semibold">↑ 5% from last month</small>
-        </div>
-    </div>
-    
-    <div class="col-md-3">
-        <div class="stats-card">
-            <h6 class="text-muted mb-2 text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">Applications</h6>
-            <h2 class="mb-2 fw-bold" style="color: #dc2626;">8,923</h2>
-            <small class="text-success fw-semibold">↑ 18% from last month</small>
+    <div class="col-md-4">
+        <div class="p-3 border rounded-3 bg-light h-100">
+            <div class="text-muted small">Ngưng hoạt động</div>
+            <h3 class="fw-bold text-danger mb-1">@Model.InactiveUsers</h3>
+            <div class="small">Người dùng đã khóa mềm</div>
         </div>
     </div>
 </div>
 
-<!-- Recent Activity -->
-<div class="row mt-4">
-    <div class="col-md-8">
-        <div class="stats-card">
-            <h5 class="mb-3">Recent Activity</h5>
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>Applied to Software Engineer</td>
-                            <td>2 hours ago</td>
-                            <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>Posted new job</td>
-                            <td>5 hours ago</td>
-                            <td><span class="badge bg-info">Active</span></td>
-                        </tr>
-                        <tr>
-                            <td>Bob Johnson</td>
-                            <td>Updated profile</td>
-                            <td>1 day ago</td>
-                            <td><span class="badge bg-success">Completed</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
+<div class="row g-3 mt-1">
     <div class="col-md-4">
-        <div class="stats-card">
-            <h5 class="mb-3 fw-bold">Quick Actions</h5>
-            <div class="d-grid gap-2">
-                <a asp-action="UserList" class="btn btn-primary">
-                    Manage Users
-                </a>
-                <button class="btn btn-success">
-                    Add New Job
-                </button>
-                <button class="btn btn-info">
-                    View Reports
-                </button>
-                <button class="btn btn-warning text-white">
-                    System Settings
-                </button>
-            </div>
+        <div class="p-3 border rounded-3 h-100">
+            <div class="small text-muted">Quản trị viên</div>
+            <h4 class="fw-bold mb-0">@Model.TotalAdmins</h4>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="p-3 border rounded-3 h-100">
+            <div class="small text-muted">Ứng viên</div>
+            <h4 class="fw-bold mb-0">@Model.TotalCandidates</h4>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="p-3 border rounded-3 h-100">
+            <div class="small text-muted">Nhà tuyển dụng</div>
+            <h4 class="fw-bold mb-0">@Model.TotalRecruiters</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 d-flex flex-wrap gap-2">
+    <a asp-action="UserList" class="btn btn-topcv">Quản lý người dùng</a>
+    <a asp-action="CreateAdmin" class="btn btn-outline-success">Tạo admin</a>
+    <a asp-action="CreateCandidate" class="btn btn-outline-success">Tạo ứng viên</a>
+    <a asp-action="CreateRecruiter" class="btn btn-outline-success">Tạo nhà tuyển dụng</a>
 </div>

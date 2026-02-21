@@ -16,7 +16,7 @@ namespace vn.edu.fpt.entity
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Amount { get; set; }
         
-        public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
+        public DateTime PaymentDate { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         [MaxLength(100)]
         public string? TransactionId { get; set; }
@@ -28,3 +28,4 @@ namespace vn.edu.fpt.entity
         public string? PaymentMethod { get; set; }
     }
 }
+

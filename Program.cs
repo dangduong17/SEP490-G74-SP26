@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using vn.edu.fpt.data;
 using vn.edu.fpt.repository;
 using vn.edu.fpt.entity;
+using vn.edu.fpt.mapper;
 
 using vn.edu.fpt.service.Interfaces;
 using vn.edu.fpt.service.Implementations;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAutoMapper(typeof(AdminMappingProfile));
 
 // Add Session Support
 builder.Services.AddDistributedMemoryCache();
@@ -50,6 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Register UnitOfWork
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 var app = builder.Build();
 

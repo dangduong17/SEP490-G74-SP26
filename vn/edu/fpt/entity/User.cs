@@ -11,7 +11,7 @@ namespace vn.edu.fpt.entity
         [MaxLength(100)]
         public string? LastName { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         public DateTime? UpdatedAt { get; set; }
         
@@ -23,3 +23,4 @@ namespace vn.edu.fpt.entity
         public Admin? Admin { get; set; }
     }
 }
+

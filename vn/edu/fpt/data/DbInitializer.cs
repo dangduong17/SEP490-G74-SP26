@@ -34,7 +34,7 @@ namespace vn.edu.fpt.data
                     FirstName = "System",
                     LastName = "Admin",
                     EmailConfirmed = true,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = vn.edu.fpt.helper.DateTimeHelper.NowVietnam
                 };
 
                 var createResult = await userManager.CreateAsync(adminUser, "12345678");
@@ -49,7 +49,7 @@ namespace vn.edu.fpt.data
                         UserId = adminUser.Id,
                         FullName = "System Admin",
                         Department = "IT",
-                        CreatedAt = DateTime.UtcNow
+                        CreatedAt = vn.edu.fpt.helper.DateTimeHelper.NowVietnam
                     };
                     
                     context.Admins.Add(adminProfile);
@@ -59,3 +59,4 @@ namespace vn.edu.fpt.data
         }
     }
 }
+

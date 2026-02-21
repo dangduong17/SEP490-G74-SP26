@@ -35,6 +35,7 @@ namespace vn.edu.fpt.entity
         
         public decimal? GPA { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
     }
 }
+

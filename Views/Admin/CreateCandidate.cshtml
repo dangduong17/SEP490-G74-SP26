@@ -1,0 +1,80 @@
+@model vn.edu.fpt.dto.AdminCreateCandidateViewModel
+@{
+    ViewData["Title"] = "Tạo ứng viên";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-action="CreateCandidate" method="post" class="row g-3">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label">Email *</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Password" class="form-label">Mật khẩu *</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="FirstName" class="form-label">Họ *</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="LastName" class="form-label">Tên *</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="PhoneNumber" class="form-label">Số điện thoại *</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Title" class="form-label">Tiêu đề hồ sơ</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="DateOfBirth" class="form-label">Ngày sinh *</label>
+        <input asp-for="DateOfBirth" class="form-control" type="date" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Gender" class="form-label">Giới tính *</label>
+        <select asp-for="Gender" class="form-select">
+            <option value="">Chọn giới tính</option>
+            <option value="Male">Nam</option>
+            <option value="Female">Nữ</option>
+            <option value="Other">Khác</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="City" class="form-label">Thành phố</label>
+        <input asp-for="City" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="District" class="form-label">Quận/Huyện</label>
+        <input asp-for="District" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CurrentPosition" class="form-label">Vị trí hiện tại</label>
+        <input asp-for="CurrentPosition" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="YearsOfExperience" class="form-label">Số năm kinh nghiệm</label>
+        <input asp-for="YearsOfExperience" class="form-control" type="number" min="0" />
+    </div>
+    <div class="col-12">
+        <label asp-for="Address" class="form-label">Địa chỉ</label>
+        <input asp-for="Address" class="form-control" />
+    </div>
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-topcv">Tạo ứng viên</button>
+        <a asp-action="UserList" class="btn btn-outline-secondary">Quay lại</a>
+    </div>
+</form>
