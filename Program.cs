@@ -58,6 +58,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Register Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 
 var app = builder.Build();
