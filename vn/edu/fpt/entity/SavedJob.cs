@@ -14,6 +14,7 @@ namespace vn.edu.fpt.entity
         [ForeignKey(nameof(JobId))]
         public Job Job { get; set; } = null!;
         
-        public DateTime SavedAt { get; set; } = DateTime.UtcNow;
+        public DateTime SavedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
     }
 }
+

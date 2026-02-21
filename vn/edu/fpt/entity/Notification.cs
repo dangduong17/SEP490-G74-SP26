@@ -22,7 +22,7 @@ namespace vn.edu.fpt.entity
         
         public bool IsRead { get; set; } = false;
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         [MaxLength(50)]
         public string? Type { get; set; }
@@ -31,3 +31,4 @@ namespace vn.edu.fpt.entity
         public string? Link { get; set; }
     }
 }
+

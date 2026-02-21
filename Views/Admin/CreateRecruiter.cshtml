@@ -1,0 +1,87 @@
+@model vn.edu.fpt.dto.AdminCreateRecruiterViewModel
+@{
+    ViewData["Title"] = "Tạo nhà tuyển dụng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-action="CreateRecruiter" method="post" class="row g-3">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label">Email *</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Password" class="form-label">Mật khẩu *</label>
+        <input asp-for="Password" class="form-control" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="FirstName" class="form-label">Họ *</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="LastName" class="form-label">Tên *</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="PhoneNumber" class="form-label">Số điện thoại *</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Position" class="form-label">Vị trí công việc *</label>
+        <input asp-for="Position" class="form-control" />
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Department" class="form-label">Phòng ban</label>
+        <input asp-for="Department" class="form-control" />
+    </div>
+
+    <div class="col-12">
+        <hr />
+        <h6 class="mb-1">Thông tin công ty</h6>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyName" class="form-label">Tên công ty *</label>
+        <input asp-for="CompanyName" class="form-control" />
+        <span asp-validation-for="CompanyName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyTaxCode" class="form-label">Mã số thuế</label>
+        <input asp-for="CompanyTaxCode" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanySize" class="form-label">Quy mô</label>
+        <input asp-for="CompanySize" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyIndustry" class="form-label">Lĩnh vực</label>
+        <input asp-for="CompanyIndustry" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyWebsite" class="form-label">Website</label>
+        <input asp-for="CompanyWebsite" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyEmail" class="form-label">Email công ty</label>
+        <input asp-for="CompanyEmail" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="CompanyPhone" class="form-label">SĐT công ty</label>
+        <input asp-for="CompanyPhone" class="form-control" />
+    </div>
+    <div class="col-12">
+        <label asp-for="CompanyDescription" class="form-label">Mô tả công ty</label>
+        <textarea asp-for="CompanyDescription" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-topcv">Tạo nhà tuyển dụng</button>
+        <a asp-action="UserList" class="btn btn-outline-secondary">Quay lại</a>
+    </div>
+</form>

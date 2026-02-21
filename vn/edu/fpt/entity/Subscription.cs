@@ -26,6 +26,7 @@ namespace vn.edu.fpt.entity
         [MaxLength(50)]
         public string Status { get; set; } = "Active";
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
     }
 }
+

@@ -39,9 +39,10 @@ namespace vn.edu.fpt.entity
         
         public decimal? Longitude { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         // Navigation properties
         public ICollection<Job> Jobs { get; set; } = new List<Job>();
     }
 }
+

@@ -33,7 +33,7 @@ namespace vn.edu.fpt.entity
         
         public int DownloadCount { get; set; } = 0;
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         public DateTime? UpdatedAt { get; set; }
         
@@ -41,4 +41,5 @@ namespace vn.edu.fpt.entity
         public ICollection<Application> Applications { get; set; } = new List<Application>();
     }
 }
+
 

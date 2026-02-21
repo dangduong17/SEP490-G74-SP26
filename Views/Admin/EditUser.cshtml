@@ -1,0 +1,106 @@
+@model vn.edu.fpt.dto.AdminUpdateUserViewModel
+@{
+    ViewData["Title"] = "Cập nhật người dùng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form asp-action="EditUser" method="post" class="row g-3">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label">Email *</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Role" class="form-label">Vai trò *</label>
+        <select asp-for="Role" id="roleSelect" class="form-select">
+            <option value="Admin">Admin</option>
+            <option value="Candidate">Ứng viên</option>
+            <option value="Recruiter">Nhà tuyển dụng</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="FirstName" class="form-label">Họ *</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="LastName" class="form-label">Tên *</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label">Đang hoạt động</label>
+        </div>
+    </div>
+
+    <div class="col-md-6 role-admin">
+        <label asp-for="AdminDepartment" class="form-label">Phòng ban</label>
+        <input asp-for="AdminDepartment" class="form-control" />
+    </div>
+    <div class="col-md-6 role-candidate">
+        <label asp-for="CandidateTitle" class="form-label">Tiêu đề hồ sơ</label>
+        <input asp-for="CandidateTitle" class="form-control" />
+    </div>
+    <div class="col-md-6 role-candidate">
+        <label asp-for="CandidateDateOfBirth" class="form-label">Ngày sinh *</label>
+        <input asp-for="CandidateDateOfBirth" class="form-control" type="date" />
+        <span asp-validation-for="CandidateDateOfBirth" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 role-candidate">
+        <label asp-for="CandidateGender" class="form-label">Giới tính *</label>
+        <select asp-for="CandidateGender" class="form-select">
+            <option value="">Chọn giới tính</option>
+            <option value="Male">Nam</option>
+            <option value="Female">Nữ</option>
+            <option value="Other">Khác</option>
+        </select>
+        <span asp-validation-for="CandidateGender" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 role-candidate">
+        <label asp-for="CandidateCity" class="form-label">Thành phố</label>
+        <input asp-for="CandidateCity" class="form-control" />
+    </div>
+    <div class="col-md-6 role-recruiter">
+        <label asp-for="RecruiterPosition" class="form-label">Vị trí *</label>
+        <input asp-for="RecruiterPosition" class="form-control" />
+        <span asp-validation-for="RecruiterPosition" class="text-danger"></span>
+    </div>
+    <div class="col-md-6 role-recruiter">
+        <label asp-for="RecruiterDepartment" class="form-label">Phòng ban</label>
+        <input asp-for="RecruiterDepartment" class="form-control" />
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-topcv">Lưu</button>
+        <a asp-action="UserList" class="btn btn-outline-secondary">Quay lại</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        (function () {
+            const roleSelect = document.getElementById("roleSelect");
+
+            function applyRoleVisibility() {
+                const role = roleSelect.value;
+                document.querySelectorAll(".role-admin").forEach(x => x.style.display = role === "Admin" ? "" : "none");
+                document.querySelectorAll(".role-candidate").forEach(x => x.style.display = role === "Candidate" ? "" : "none");
+                document.querySelectorAll(".role-recruiter").forEach(x => x.style.display = role === "Recruiter" ? "" : "none");
+            }
+
+            roleSelect.addEventListener("change", applyRoleVisibility);
+            applyRoleVisibility();
+        })();
+    </script>
+}

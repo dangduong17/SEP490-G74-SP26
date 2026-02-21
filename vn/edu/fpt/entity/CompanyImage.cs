@@ -23,6 +23,7 @@ namespace vn.edu.fpt.entity
         
         public int DisplayOrder { get; set; } = 0;
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
     }
 }
+

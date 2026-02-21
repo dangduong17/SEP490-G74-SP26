@@ -97,7 +97,7 @@ namespace vn.edu.fpt.entity
         
         public bool IsUrgent { get; set; } = false;
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         public DateTime? UpdatedAt { get; set; }
         
@@ -112,4 +112,5 @@ namespace vn.edu.fpt.entity
         public ICollection<SavedJob> SavedByUsers { get; set; } = new List<SavedJob>();
     }
 }
+
 

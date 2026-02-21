@@ -62,7 +62,7 @@ namespace vn.edu.fpt.entity
         
         public bool AllowContact { get; set; } = true;
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         public DateTime? UpdatedAt { get; set; }
         
@@ -76,3 +76,4 @@ namespace vn.edu.fpt.entity
         public ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
     }
 }
+

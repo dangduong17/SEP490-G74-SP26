@@ -46,7 +46,7 @@ namespace vn.edu.fpt.entity
         
         public DateTime? VerifiedAt { get; set; }
         
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
         
         public DateTime? UpdatedAt { get; set; }
         
@@ -58,3 +58,4 @@ namespace vn.edu.fpt.entity
         public ICollection<CompanyImage> Images { get; set; } = new List<CompanyImage>();
     }
 }
+

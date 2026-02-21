@@ -14,6 +14,7 @@ namespace vn.edu.fpt.entity
         [ForeignKey(nameof(CompanyId))]
         public Company Company { get; set; } = null!;
         
-        public DateTime FollowedAt { get; set; } = DateTime.UtcNow;
+        public DateTime FollowedAt { get; set; } = vn.edu.fpt.helper.DateTimeHelper.NowVietnam;
     }
 }
+
