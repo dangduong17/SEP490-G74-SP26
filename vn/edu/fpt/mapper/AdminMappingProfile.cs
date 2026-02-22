@@ -120,6 +120,47 @@ namespace vn.edu.fpt.mapper
                 .ForMember(dest => dest.CompanyId, opt => opt.Ignore())
                 .ForMember(dest => dest.Company, opt => opt.Ignore())
                 .ForMember(dest => dest.Jobs, opt => opt.Ignore());
+
+            // RecruiterRegisterViewModel -> Recruiter
+            CreateMap<RecruiterRegisterViewModel, Recruiter>()
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.PhoneNumber))
+                .ForMember(dest => dest.FullName, opt => opt.Ignore())
+                .ForMember(dest => dest.CompanyId, opt => opt.Ignore())
+                .ForMember(dest => dest.Company, opt => opt.Ignore())
+                .ForMember(dest => dest.Avatar, opt => opt.Ignore())
+                .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
+                .ForMember(dest => dest.VerifiedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.VerificationDocument, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore())
+                .ForMember(dest => dest.User, opt => opt.Ignore())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Jobs, opt => opt.Ignore());
+
+            // RecruiterRegisterViewModel -> Company
+            CreateMap<RecruiterRegisterViewModel, Company>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CompanyName))
+                .ForMember(dest => dest.TaxCode, opt => opt.MapFrom(src => src.CompanyTaxCode))
+                .ForMember(dest => dest.CompanySize, opt => opt.MapFrom(src => src.CompanySize))
+                .ForMember(dest => dest.Industry, opt => opt.MapFrom(src => src.CompanyIndustry))
+                .ForMember(dest => dest.Website, opt => opt.MapFrom(src => src.CompanyWebsite))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.CompanyEmail))
+                .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.CompanyPhone))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.CompanyDescription))
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Logo, opt => opt.Ignore())
+                .ForMember(dest => dest.CoverImage, opt => opt.Ignore())
+                .ForMember(dest => dest.Benefits, opt => opt.Ignore())
+                .ForMember(dest => dest.IsVerified, opt => opt.Ignore())
+                .ForMember(dest => dest.VerifiedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Addresses, opt => opt.Ignore())
+                .ForMember(dest => dest.Jobs, opt => opt.Ignore())
+                .ForMember(dest => dest.Recruiters, opt => opt.Ignore())
+                .ForMember(dest => dest.Followers, opt => opt.Ignore())
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
         }
     }
 }
