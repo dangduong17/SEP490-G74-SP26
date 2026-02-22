@@ -23,19 +23,32 @@ namespace vn.edu.fpt.controller
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity?.IsAuthenticated == true) return RedirectToDashboard();
             return View();
         }
 
         [HttpGet]
         public IActionResult RegisterRecruiter()
         {
-            return View();
+            if (User.Identity?.IsAuthenticated == true) return RedirectToDashboard();
+            return View(new RecruiterRegisterViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterRecruiter(RegisterDto registerDto)
+        public async Task<IActionResult> RegisterRecruiter(RecruiterRegisterViewModel model)
         {
-            return await Register(registerDto);
+            if (!ModelState.IsValid) return View(model);
+
+            var confirmationLink = Url.Action("ConfirmEmail", "Auth", new { email = model.Email }, Request.Scheme) ?? "";
+            var result = await _authService.RegisterRecruiterAsync(model, confirmationLink);
+            if (!result.Success)
+            {
+                ModelState.AddModelError("", result.ErrorMessage ?? "Đăng ký thất bại.");
+                return View(model);
+            }
+
+            TempData["SuccessToast"] = "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.";
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -132,6 +145,7 @@ namespace vn.edu.fpt.controller
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity?.IsAuthenticated == true) return RedirectToDashboard();
             return View();
         }
 
@@ -260,18 +274,21 @@ namespace vn.edu.fpt.controller
                 return View();
             }
 
-            // Send email
-            var subject = "Mật khẩu mới của bạn - Finding Jobs";
-            var message = $"Chào bạn {user.LastName} {user.FirstName},<br/><br/>" +
-                          $"Mật khẩu của bạn đã được đặt lại theo yêu cầu.<br/>" +
-                          $"Mật khẩu mới của bạn là: <b>{newPassword}</b><br/><br/>" +
-                          $"Vui lòng đăng nhập và đổi mật khẩu ngay để đảm bảo an toàn.<br/><br/>" +
-                          $"Trân trọng,<br/>Finding Jobs Team";
-
-            await _authService.SendRawEmailAsync(user.Email!, subject, message);
+            var fullName = $"{user.LastName} {user.FirstName}".Trim();
+            await _authService.SendRawEmailAsync(user.Email!, "Mật khẩu mới của bạn - Finding Jobs",
+                vn.edu.fpt.service.Implementations.AuthService.BuildResetPasswordEmail(fullName, newPassword));
 
             TempData["SuccessToast"] = "Mật khẩu mới đã được gửi đến email của bạn.";
             return RedirectToAction("Login");
+        }
+
+        private IActionResult RedirectToDashboard()
+        {
+            var role = HttpContext.Session.GetString("UserRole");
+            if (role == "Admin") return RedirectToAction("Index", "Admin");
+            if (role == "Recruiter") return RedirectToAction("RecruiterDashboard", "Recruiter");
+            if (role == "Candidate") return RedirectToAction("CandidateDashboard", "Candidates");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
