@@ -6,22 +6,24 @@
 <section class="auth-section">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-5 col-lg-4">
+            <div class="col-md-7 ">
                 <div class="auth-card">
                     <div class="auth-header">
                         <h2 class="auth-title">Đăng nhập</h2>
                         <p class="auth-subtitle">Chào mừng bạn trở lại Finding Jobs</p>
                     </div>
                     
-                    <form method="post" class="auth-form">
+                    <form asp-action="Login" method="post" class="auth-form" novalidate>
                         <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input name="email" class="form-control" type="email" placeholder="name@example.com" required />
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" type="email" placeholder="name@example.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label">Mật khẩu</label>
-                            <input name="password" class="form-control" type="password" placeholder="Nhập mật khẩu" required />
+                            <label asp-for="Password" class="form-label">Mật khẩu</label>
+                            <input asp-for="Password" class="form-control" type="password" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
                         
                         <div class="mb-3">
@@ -61,3 +63,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -13,9 +13,9 @@
                         <p class="auth-subtitle mb-0">Tạo tài khoản để đăng tin tuyển dụng trên Finding Jobs</p>
                     </div>
 
-                    <form asp-action="RegisterRecruiter" method="post" class="p-4">
+                    <form asp-action="RegisterRecruiter" method="post" class="p-4" novalidate>
                         @Html.AntiForgeryToken()
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
 
                         <!-- Thông tin tài khoản -->
                         <div class="mb-4">
@@ -48,18 +48,19 @@
                             </h6>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label asp-for="FirstName" class="form-label fw-semibold small">Họ *</label>
-                                    <input asp-for="FirstName" class="form-control" placeholder="Nhập họ" />
-                                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                                    <label asp-for="LastName" class="form-label fw-semibold small">Họ *</label>
+                                    <input asp-for="LastName" class="form-control" placeholder="Nhập họ" />
+                                    <span asp-validation-for="LastName" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="LastName" class="form-label fw-semibold small">Tên *</label>
-                                    <input asp-for="LastName" class="form-control" placeholder="Nhập tên" />
-                                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                                    <label asp-for="FirstName" class="form-label fw-semibold small">Tên *</label>
+                                    <input asp-for="FirstName" class="form-control" placeholder="Nhập tên" />
+                                    <span asp-validation-for="FirstName" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="PhoneNumber" class="form-label fw-semibold small">Số điện thoại</label>
                                     <input asp-for="PhoneNumber" class="form-control" placeholder="0912 345 678" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="Position" class="form-label fw-semibold small">Vị trí công việc *</label>
@@ -69,6 +70,7 @@
                                 <div class="col-md-6">
                                     <label asp-for="Department" class="form-label fw-semibold small">Phòng ban</label>
                                     <input asp-for="Department" class="form-control" placeholder="VD: Phòng Nhân sự" />
+                                    <span asp-validation-for="Department" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
@@ -85,11 +87,12 @@
                                     <span asp-validation-for="CompanyName" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="CompanyTaxCode" class="form-label fw-semibold small">Mã số thuế</label>
+                                    <label asp-for="CompanyTaxCode" class="form-label fw-semibold small">Mã số thuế *</label>
                                     <input asp-for="CompanyTaxCode" class="form-control" placeholder="VD: 0123456789" />
+                                    <span asp-validation-for="CompanyTaxCode" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="CompanySize" class="form-label fw-semibold small">Quy mô</label>
+                                    <label asp-for="CompanySize" class="form-label fw-semibold small">Quy mô *</label>
                                     <select asp-for="CompanySize" class="form-select">
                                         <option value="">-- Chọn quy mô --</option>
                                         <option>1-10</option>
@@ -99,26 +102,32 @@
                                         <option>501-1000</option>
                                         <option>1000+</option>
                                     </select>
+                                    <span asp-validation-for="CompanySize" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="CompanyIndustry" class="form-label fw-semibold small">Lĩnh vực</label>
+                                    <label asp-for="CompanyIndustry" class="form-label fw-semibold small">Lĩnh vực *</label>
                                     <input asp-for="CompanyIndustry" class="form-control" placeholder="VD: Công nghệ thông tin" />
+                                    <span asp-validation-for="CompanyIndustry" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="CompanyWebsite" class="form-label fw-semibold small">Website</label>
                                     <input asp-for="CompanyWebsite" class="form-control" placeholder="https://company.com" />
+                                    <span asp-validation-for="CompanyWebsite" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="CompanyEmail" class="form-label fw-semibold small">Email công ty</label>
+                                    <label asp-for="CompanyEmail" class="form-label fw-semibold small">Email công ty *</label>
                                     <input asp-for="CompanyEmail" class="form-control" placeholder="hr@company.com" />
+                                    <span asp-validation-for="CompanyEmail" class="text-danger small"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="CompanyPhone" class="form-label fw-semibold small">SĐT công ty</label>
+                                    <label asp-for="CompanyPhone" class="form-label fw-semibold small">SĐT công ty *</label>
                                     <input asp-for="CompanyPhone" class="form-control" placeholder="028 1234 5678" />
+                                    <span asp-validation-for="CompanyPhone" class="text-danger small"></span>
                                 </div>
                                 <div class="col-12">
                                     <label asp-for="CompanyDescription" class="form-label fw-semibold small">Mô tả công ty</label>
                                     <textarea asp-for="CompanyDescription" class="form-control" rows="3" placeholder="Giới thiệu ngắn về công ty..."></textarea>
+                                    <span asp-validation-for="CompanyDescription" class="text-danger small"></span>
                                 </div>
                             </div>
                         </div>
@@ -153,3 +162,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

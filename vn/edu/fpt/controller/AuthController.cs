@@ -24,7 +24,7 @@ namespace vn.edu.fpt.controller
         public IActionResult Register()
         {
             if (User.Identity?.IsAuthenticated == true) return RedirectToDashboard();
-            return View();
+            return View(new RegisterDto());
         }
 
         [HttpGet]
@@ -43,6 +43,7 @@ namespace vn.edu.fpt.controller
             var result = await _authService.RegisterRecruiterAsync(model, confirmationLink);
             if (!result.Success)
             {
+                TempData["ErrorToast"] = result.ErrorMessage ?? "Đăng ký thất bại.";
                 ModelState.AddModelError("", result.ErrorMessage ?? "Đăng ký thất bại.");
                 return View(model);
             }
@@ -65,12 +66,13 @@ namespace vn.edu.fpt.controller
             var result = await _authService.RegisterAsync(registerDto, confirmationLink);
             if (!result.Success)
             {
+                TempData["ErrorToast"] = result.ErrorMessage ?? "Đăng ký thất bại.";
                 ModelState.AddModelError("", result.ErrorMessage ?? "Đăng ký thất bại.");
                 return View(registerDto);
             }
 
             TempData["SuccessToast"] = "Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.";
-            return View("Login");
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
@@ -117,12 +119,9 @@ namespace vn.edu.fpt.controller
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var confirmationLink = Url.Action("ConfirmEmail", "Auth", new { email = user.Email, token = token }, Request.Scheme) ?? "";
                 
+                var fullName = $"{user.LastName} {user.FirstName}".Trim();
                 var subject = "Kích hoạt lại tài khoản - Finding Jobs";
-                var message = $"Chào bạn {user.LastName} {user.FirstName},<br/><br/>" +
-                              $"Bạn đã yêu cầu gửi lại liên kết kích hoạt tài khoản.<br/>" +
-                              $"Vui lòng <a href='{confirmationLink}'>nhấn vào đây</a> để xác nhận.<br/><br/>" +
-                              $"Lưu ý: Liên kết này sẽ hết hạn trong vòng <b>5 phút</b>.<br/><br/>" +
-                              $"Trân trọng,<br/>Finding Jobs Team";
+                var message = vn.edu.fpt.service.Implementations.AuthService.BuildResendConfirmEmail(fullName, confirmationLink);
 
                 if (string.IsNullOrEmpty(user.Email))
                 {
@@ -152,7 +151,10 @@ namespace vn.edu.fpt.controller
         [HttpPost]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-             if (!ModelState.IsValid) return View(loginDto);
+             if (!ModelState.IsValid)
+             {
+                 return View(loginDto);
+             }
 
              // Check if user exists first
              var user = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -195,7 +197,7 @@ namespace vn.edu.fpt.controller
                          else if (roles.Contains("Candidate"))
                          {
                              TempData["SuccessToast"] = "Đăng nhập thành công! Chào mừng Ứng viên.";
-                             return RedirectToAction("CandidateDashboard", "Candidates");
+                             return RedirectToAction("Index", "Home");
                          }
                      }
                  }
@@ -230,15 +232,14 @@ namespace vn.edu.fpt.controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgotPassword(string email)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto model)
         {
-            if (string.IsNullOrEmpty(email))
+            if (!ModelState.IsValid)
             {
-                TempData["ErrorToast"] = "Vui lòng nhập email.";
-                return View();
+                return View(model);
             }
 
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // For security reasons, don't reveal if user exists or not
@@ -250,7 +251,7 @@ namespace vn.edu.fpt.controller
             if (!user.EmailConfirmed)
             {
                 TempData["ErrorToast"] = "Tài khoản của bạn chưa được kích hoạt. Vui lòng kiểm tra email để kích hoạt trước khi đặt lại mật khẩu.";
-                return View();
+                return View(model);
             }
 
             // Generate a new random password (6 alphanumeric characters)
@@ -264,14 +265,14 @@ namespace vn.edu.fpt.controller
             if (!removeResult.Succeeded)
             {
                 TempData["ErrorToast"] = "Không thể đặt lại mật khẩu. Vui lòng thử lại sau.";
-                return View();
+                return View(model);
             }
 
             var addResult = await _userManager.AddPasswordAsync(user, newPassword);
             if (!addResult.Succeeded)
             {
                 TempData["ErrorToast"] = "Không thể thêm mật khẩu mới. Vui lòng thử lại sau.";
-                return View();
+                return View(model);
             }
 
             var fullName = $"{user.LastName} {user.FirstName}".Trim();
@@ -287,7 +288,7 @@ namespace vn.edu.fpt.controller
             var role = HttpContext.Session.GetString("UserRole");
             if (role == "Admin") return RedirectToAction("Index", "Admin");
             if (role == "Recruiter") return RedirectToAction("RecruiterDashboard", "Recruiter");
-            if (role == "Candidate") return RedirectToAction("CandidateDashboard", "Candidates");
+            if (role == "Candidate") return RedirectToAction("Index", "Home");
             return RedirectToAction("Index", "Home");
         }
     }

@@ -6,7 +6,7 @@ namespace vn.edu.fpt.dto
     {
         // --- Tài khoản ---
         [Required(ErrorMessage = "Email là bắt buộc.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mật khẩu là bắt buộc.")]
@@ -18,11 +18,11 @@ namespace vn.edu.fpt.dto
         public string ConfirmPassword { get; set; } = string.Empty;
 
         // --- Thông tin cá nhân ---
-        [Required(ErrorMessage = "Họ là bắt buộc.")]
+        [Required(ErrorMessage = "Tên là bắt buộc.")]
         [MaxLength(100)]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Tên là bắt buộc.")]
+        [Required(ErrorMessage = "Họ là bắt buộc.")]
         [MaxLength(100)]
         public string LastName { get; set; } = string.Empty;
 
@@ -41,22 +41,27 @@ namespace vn.edu.fpt.dto
         [MaxLength(255)]
         public string CompanyName { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Mã số thuế là bắt buộc.")]
         [MaxLength(100)]
         public string? CompanyTaxCode { get; set; }
 
+        [Required(ErrorMessage = "Vui lòng chọn quy mô công ty.")]
         [MaxLength(50)]
         public string? CompanySize { get; set; }
 
+        [Required(ErrorMessage = "Lĩnh vực hoạt động là bắt buộc.")]
         [MaxLength(200)]
         public string? CompanyIndustry { get; set; }
 
         [MaxLength(500)]
         public string? CompanyWebsite { get; set; }
 
-        [EmailAddress]
+        [Required(ErrorMessage = "Email công ty là bắt buộc.")]
+        [EmailAddress(ErrorMessage = "Email công ty không hợp lệ.")]
         [MaxLength(100)]
         public string? CompanyEmail { get; set; }
 
+        [Required(ErrorMessage = "Số điện thoại công ty là bắt buộc.")]
         [MaxLength(20)]
         public string? CompanyPhone { get; set; }
 
